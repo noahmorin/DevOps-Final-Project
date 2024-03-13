@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Search Artist</h1>
+    <h1>Search Song</h1>
     <form action="/searchSong" method="post">
-        <label for="song">Song:</label>
-        <input type="text" id="song" name="song" required>
+        <label for="track">Song:</label>
+        <input type="text" id="track" name="track" required>
         <input type="submit" value="Search">
     </form>
 {% endblock %}

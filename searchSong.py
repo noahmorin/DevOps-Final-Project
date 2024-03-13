@@ -13,7 +13,4 @@ def search_for_song(token, track):
 def song_results(songName):
     token = get_token()
     result = search_for_song(token, songName)
-
-    # artistID = result["id"]
-
     return result
