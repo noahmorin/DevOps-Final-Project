@@ -3,7 +3,7 @@
 
 import unittest
 from unittest.mock import patch, Mock
-import requests  # You'll need this
+import requests
 from dotenv import load_dotenv
 import os
 from auth import get_token, get_auth_headers
