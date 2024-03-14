@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Song Recommender</h1>
+    <form action="/recommender" method="post">
+        <h3>Select Up To 5 Genres</h3>
+        <div id="genreGroup"></div>
+        <br>
+        <input type="submit">
+    </form>
+
+    <script>
+        // @ts-ignore 
+        var genres = {{ genres | tojson }};
+
+        function max_genre_check() {
+            var genreGroup = document.getElementById('genreGroup').getElementsByTagName("input");
+            
+            var limit = 5;
+        
+            for (var i = 0; i < genreGroup.length; i++) {
+                genreGroup[i].onclick = function() {
+                    var checkedCount = 0;
+                        for (var i = 0; i < genreGroup.length; i++) {
+                            checkedCount += (genreGroup[i].checked) ? 1 : 0;
+                        
+                    }
+                    if (checkedCount > limit) {
+                        alert("You can select a maximum of " + limit + " genres.");
+                        this.checked = false;
+                    }
+                }
+            }
+        }
+        function parse_genres(){
+            genresObj = genres.genres;
+            var genCheckboxes = "";
+            for (var i = 0; i < genresObj.length; i++){
+                if (i % 12 == 0){
+                    genCheckboxes += '<br>';
+                }
+                genCheckboxes += '<input type="checkbox" name="'+genresObj[i]+'" value="'+ genresObj[i] +'"><b>' + genresObj[i] + '</b></input>  ';
+                
+            }
+            console.log(genCheckboxes);
+            document.getElementById('genreGroup').innerHTML = genCheckboxes; 
+        }
+    </script>
+
+    <script type="text/javascript">
+        parse_genres()
+        max_genre_check()
+    </script>
+{% endblock %}

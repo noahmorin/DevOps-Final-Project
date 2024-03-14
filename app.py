@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from searchSong import song_results
+from recommender import get_genre_seeds, get_recommendation
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
 
@@ -12,10 +14,23 @@ def search_track_route():
     if request.method == 'POST':
         songName = request.form['track']
         results = song_results(songName)
-        return render_template('results.html', results=results)
+        return render_template('results.html', results = results)
     else:
-        return render_template('searchSong.html')
-
+        return render_template('searchSongs.html')
+    
+@app.route('/recommender', methods=['GET', 'POST'])
+def recommender_route():
+    if request.method == 'POST':
+        seedGenres = ""
+        genreDict = request.form.to_dict(flat=False)
+        for genre in genreDict:
+            seedGenres += genre + "&"
+        songRecommendation = get_recommendation(seedGenres)
+        return render_template('recommendation.html', results = songRecommendation)
+    else:
+        genres = get_genre_seeds()
+        return render_template('recommender.html', genres=genres)
+    
 # @app.route('/searchTrack', methods=['GET', 'POST'])
 # def search_track_route():
 #     if request.method == 'POST':
