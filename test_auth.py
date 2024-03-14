@@ -32,17 +32,19 @@ class Test_Auth(unittest.TestCase):
 
     @patch('auth.post')
     def test_get_token_failure(self, mock_post):
-        mock_post.return_value.status_code = 400
-        mock_post.return_value.text = "Bad Request"
 
-        print('test')
+        expectedStatusCode = 400
+        expectedResponse = "Bad Request"
+
+        mock_post.return_value.status_code = expectedStatusCode
+        mock_post.return_value.text = expectedResponse
 
         # Checks to make sure that the function raises an exception when the status code is not 200
         with self.assertRaises(Exception) as context:
             get_token()
 
         # Checks to make sure that the exception message matches the actual exception message from the get_token function
-        self.assertEqual(str(context.exception), "Status code 400 and response: Bad Request, while trying to get token.")
+        self.assertEqual(str(context.exception), f"Status code {expectedStatusCode} and response: {expectedResponse}, while trying to get token.")
 
     def test_get_auth_headers(self):
         token = "sample_token"
