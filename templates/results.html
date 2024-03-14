@@ -5,7 +5,7 @@
         {% for results in all_results %}
             <h2>{{ results.name }}</h2>
             <p>ID: {{ results.id }}</p>
-            <p>Artist: {{results.artists.name}}</p>
+            <p>Artist: {{results.artists[0].name}}</p>
             <p>Album: {{results.album.name}}</p>
             {% if results.album.images %}
                 <img src="{{ results.album.images[0].url }}" alt="Album Image" width="300" height="300">
