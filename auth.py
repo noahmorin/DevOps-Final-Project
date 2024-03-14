@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from requests import post, get, request
+import requests
 import json
 import base64
 import os
@@ -24,10 +24,10 @@ def get_token():
         "grant_type": "client_credentials"
     }
 
-    response = post(url, headers=headers, data=data)
+    response = requests.post(url, headers=headers, data=data)
 
     if response.status_code == 200:
-        token = response.json()["access_token"]
+        token = response.json()['access_token']
         return token
     else:
         raise Exception(f"Status code {response.status_code} and response: {response.text}, while trying to get token.")
@@ -35,4 +35,4 @@ def get_token():
 def get_auth_headers(token):
     return {"Authorization": "Bearer " + token}
 
-# get_token() # test if the function works
+# print(get_token()) # test if the function works

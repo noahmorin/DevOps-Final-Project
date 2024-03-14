@@ -15,7 +15,10 @@ import base64
 # clientSecret = os.getenv("CLIENT_SECRET")
 
 class Test_Auth(unittest.TestCase):
-    @patch('auth.post') 
+
+    # Import method from auth.py affects the patch() decorator that needs to be specified
+    # Use auth.post instead of requests.post when importing 'from requests import post'
+    @patch('requests.post') 
     def test_get_token_success(self, mock_post):
         mock_post.return_value.status_code = 200
         # represents the JSON response that the code would expect. Does not actually print JSON response.
@@ -30,7 +33,7 @@ class Test_Auth(unittest.TestCase):
 
         self.assertEqual(token, "sample_token") 
 
-    @patch('auth.post')
+    @patch('requests.post')
     def test_get_token_failure(self, mock_post):
 
         expectedStatusCode = 400
