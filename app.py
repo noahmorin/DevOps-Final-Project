@@ -13,8 +13,8 @@ def index():
 def search_track_route():
     if request.method == 'POST':
         songName = request.form['track']
-        results = song_results(songName)
-        return render_template('results.html', results = results)
+        all_results = song_results(songName)
+        return render_template('results.html', all_results=all_results)
     else:
         return render_template('searchSongs.html')
     
