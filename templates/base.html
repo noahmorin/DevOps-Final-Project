@@ -4,15 +4,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title</title>
+        <title>base</title>
+    <link rel="stylesheet" href="/static/style.css" />
     </head>
-    <body>
+    <body class='template'>
         <nav>
-            <a href="/">Home</a>
-            <a href="/searchArtist">Search</a>
+                <a href="/">Home</a>
+                <a href="/searchArtist">Artist</a>
+                <a href="/searchAlbum">Album</a>
         </nav>
-        <div>
-            {% block content %}{% endblock %}
-        </div>
+
+        <a href="/searchArtist" class="card">
+            <div class="card">
+              <img src="/static/min11.jpg" alt="Card Image">
+            </div>
+            <div class="card-content">
+              <h2>Search Artist</h2>
+            </div>
+        </a>
+        <a href="/" class="card">
+            <div class="card">
+              <img src="/static/min2.png" alt="Card Image">
+            </div>
+            <div class="card-content">
+              <h2>Home page</h2>
+            </div>
+        </a>
+        <a href="/searchAlbum" class="card">
+            <div class="card">
+              <img src="/static/min3.jpg" alt="Card Image">
+            </div>
+            <div class="card-content">
+              <h2>Search Album</h2>
+            </div>
+        </a>     
+           {% block content %}{% endblock %}    
     </body>
 </html>

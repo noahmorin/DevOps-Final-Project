@@ -10,7 +10,7 @@ def search_for_artist(token, artist):
     jsonResult = json.loads(result.content)["artists"]["items"]
 
     # TODO - error handling for when the artist is not found
-    
+    # try-except-else-finally
     return jsonResult[0]
 
 def artist_results(artistName):

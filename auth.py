@@ -9,14 +9,18 @@ load_dotenv()
 clientID = os.getenv("CLIENT_ID")
 clientSecret = os.getenv("CLIENT_SECRET")
 
+
 def get_token():
     
     # Combine clientID and clientSecret into a string, then encode to base64, then decode it to utf-8
-    encodedCredentials = base64.b64encode(f"{clientID}:{clientSecret}".encode()).decode('utf-8')
+    auth_string = clientID + ":" + clientSecret
+    auth_bytes = auth_string.encode("utf-8")
+    auth_base64 = str(base64.b64encode(auth_bytes), "utf-8)")
+    #encodedCredentials = base64.b64encode(f"{clientID}:{clientSecret}".encode()).decode('utf-8')
 
     url = "https://accounts.spotify.com/api/token"
     headers = {
-        "Authorization": "Basic " + encodedCredentials,
+        "Authorization": "Basic " + auth_base64,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     data = {
@@ -34,3 +38,4 @@ def get_token():
 
 def get_auth_headers(token):
     return {"Authorization": "Bearer " + token}
+

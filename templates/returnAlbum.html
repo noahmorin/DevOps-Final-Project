@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search Results</h1>
+    <div>
+        <h2>{{ returnAlbum.name }}</h2>
+        <p>ID: {{ returnAlbum.id }}</p>
+        {% if returnAlbum.images %}
+            <img src="{{ returnAlbum.images[0].url }}" alt="Album Image">
+        {% endif %}
+        <ul>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
