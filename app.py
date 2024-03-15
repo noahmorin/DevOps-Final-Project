@@ -37,4 +37,4 @@ def searchAlbum_route():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost",port=7575, debug=True)
+    app.run(host="localhost",port=7575)

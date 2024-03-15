@@ -12,6 +12,7 @@ def get_album_tracks(albumName):
     url = f"https://api.spotify.com/v1/albums/{albumID}/tracks?"
 
     result = get(url, headers=headers)
-    albumTracks = json.loads(result.content)["total_tracks"]["name"]["images"]["release_date"]
+    trackData = json.loads(result.content)
+    # albumTracks = json.loads(result.content)["total_tracks"]["name"]["images"]["release_date"]
 
-    return [track["name"] for track in albumTracks]
+    return [track["name"] for track in trackData["items"]]

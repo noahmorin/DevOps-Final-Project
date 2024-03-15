@@ -11,6 +11,7 @@ def searchAlbum(token, albums):
     albumResult = get(url, headers=headers)
     jsonResult = json.loads(albumResult.content) ["albums"]["items"]
     print(jsonResult)
+    return jsonResult[0]
 
 def album_Results(albumName):
     token = get_token()
@@ -18,4 +19,5 @@ def album_Results(albumName):
 
     # albumID = result["id"]
 
+    print(result)
     return result
