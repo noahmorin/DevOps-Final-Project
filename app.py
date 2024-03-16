@@ -11,7 +11,7 @@ def test_index():
 def test_search_track_route():
     if request.method == 'POST':
         songName = request.form['track']
-        all_results = song_results(songName)
-        return render_template('songResults.html', all_results=all_results)
+        allResults = song_results(songName)
+        return render_template('songResults.html', all_results=allResults)
     else:
         return render_template('searchSong.html')

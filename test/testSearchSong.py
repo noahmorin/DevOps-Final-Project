@@ -3,16 +3,16 @@ import json
 from flask import render_template
 
 class test_searchSong(unittest.TestCase):
-    def test_search_for_song(self):
+    def test_search_for_song(self): # Tests the api call and returns json data appropriately
         results = self.call_api()
         try:
             jsonResult = json.loads(results.content)["tracks"]["items"]
         except:
             jsonResult = []
-        self.assertIsInstance(jsonResult, dict)
+        self.assertIsInstance(jsonResult, dict) # ensure that jsonResult is a dictionary
         return jsonResult
 
-    def call_api(self):
+    def call_api(self): # Mock api call, just gets the test.json file
         with open('test.json', 'r') as f:
             return json.load(f)
 
@@ -20,11 +20,11 @@ class test_searchSong(unittest.TestCase):
         results = self.test_search_for_song()
         if results == []:
             return render_template('noResults.html')
-        all_results = []
+        allResults = []
         for result in results:
-            all_results.append(result)
-        self.assertIsInstance(all_results, list)
-        return all_results
+            allResults.append(result)
+        self.assertIsInstance(allResults, list)
+        return allResults
 
 if __name__ == '__main__':
     unittest.main()
