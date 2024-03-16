@@ -1,7 +1,6 @@
 from auth import get_token, get_auth_headers
 from requests import get
 import json
-from searchSong import song_results
 
 def get_genre_seeds():
     token = get_token()
