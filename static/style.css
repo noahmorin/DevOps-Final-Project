@@ -51,10 +51,63 @@ body {
     padding: 0;
     display: flex;
     background-image: url('/static/home.JPG');
+    background-size: cover;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 0;
 }
 
+/* for the  minioninifier home card */
+.cardhome {
+    text-decoration: none;
+    color: inherit;
+    width: max-content;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin: 20px;
+    align-content: center;
+
+
+}
+
+.cardhome:hover {
+  transform: scale(1.50);
+}
+
+h2 {
+  margin-top: 0;
+  background-color: #ddd;
+  text-align: center;
+  font-family: serif;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+/* for the minioninifuier home page body */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative; /* for absolute positioning */
+}
+/*styling the minions running over on top of background*/
+.overlay-image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 2; 
+}
+
+/* for the search cards in home.html*/
 .card {
     text-decoration: none;
     color: inherit;
@@ -89,3 +142,35 @@ body {
   p {
     margin-bottom: 0;
   }
+
+  .results {
+
+  }
+    .h1 {
+      font-weight: bold;
+      background-color: azure;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .h2{
+      font-weight: bold;
+      background-color: azure;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .p {
+      font-weight: bold;
+      background-color: azure;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .li {
+      font-weight: bold;
+      background-color: azure;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
