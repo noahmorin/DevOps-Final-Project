@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Profile</h1>
+
+    <div class="container">
+        <div class="image">
+          <img src="{{img}}">
+        </div>
+        <div class="text">
+          <h4>{{result}}</h4>
+        </div>
+      </div>
+    
+    <h2>User Playlist</h2>
+
+    {% for key, value in names.items() %}
+        <br />
+        <a><img src="{{value}}" width="200" height="200"></a>
+        <a>{{key}}</a>
+    {% endfor %}
+
+{% endblock %}
