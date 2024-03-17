@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from requests import post, get, request
+import requests
 import json
 import base64
 import os
@@ -11,26 +11,28 @@ clientSecret = os.getenv("CLIENT_SECRET")
 
 def get_token():
     
-    # Combine clientID and clientSecret into a string, then encode to base64, then decode it to utf-8
-    encodedCredentials = base64.b64encode(f"{clientID}:{clientSecret}".encode()).decode('utf-8')
+    # Combine clientID and clientSecret into a string, encode them to utf-8, then decode it to utf-8
 
     url = "https://accounts.spotify.com/api/token"
+    authHeader = base64.b64encode(f"{clientID}:{clientSecret}".encode('utf-8')).decode('utf-8')
+
     headers = {
-        "Authorization": "Basic " + encodedCredentials,
+        "Authorization": "Basic " + authHeader,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     data = {
         "grant_type": "client_credentials"
     }
-    result = post(url, headers=headers, data=data) #returns a response object. Useful for debugging/unit testing(?)
 
-    # Use json.loads to convert the result.content to a dictionary. Use .json() when converting python objects to json
-    jsonResult = json.loads(result.content)
+    response = requests.post(url, headers=headers, data=data)
 
-    # Could also do result.json() instead of json.loads(result.content). Unsure which is better and/or correct(?)
-    token = jsonResult["access_token"]
-    
-    return token
+    if response.status_code == 200:
+        token = response.json()['access_token']
+        return token
+    else:
+        raise Exception(f"Status code {response.status_code} and response: {response.text}, while trying to get token.")
 
 def get_auth_headers(token):
     return {"Authorization": "Bearer " + token}
+
+# print(get_token()) # test if the function works
