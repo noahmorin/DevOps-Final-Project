@@ -7,6 +7,7 @@ Our project uses the Spotify Web API and allows the user to search for various i
 - With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search, get to this feature using .../searchSong or click Song hyperlink on any webpage
 - With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artise name.
 - Song Recommender feature that accepts up to 5 genres to be selected and recommends a song to the user. Song recommendations tailored to match the minion theme.
+- User Profile feature allows users to log in with their Spotify account to view their profile information. This includes their username, profile image, and their playlists.
 
 
 # How to install
@@ -19,6 +20,7 @@ Our project uses the Spotify Web API and allows the user to search for various i
     - 'Website' can be left blank
     - Set 'Redirect URI' to ```http://127.0.0.1:5000/callback/```
   - Click on your new app, and click settings, and remember your CLIENT_ID and CLIENT_SECRET for the next step
+  - To test with Spotify accounts other than the developer account, select the User Management option in settings and add the user's name and email connected to the Spotify account.
 * Create a file named **.env** in the root folder of the cloned repository
   - Add the lines
     ```
