@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search Results</h1>
+    <div>
+        <h2>{{ results.name }}</h2>
+        <p>ID: {{ results.id }}</p>
+        <p>Followers: {{ results.followers.total }}</p>
+        <p>Genres: {{ results.genres | join(', ') }}</p>
+        <p>URL: <a href="{{ results.external_urls.spotify}}">{{ results.external_urls.spotify }}</a></p>
+
+        {% if results.images %}
+            <img src="{{ results.images[0].url }}" alt="Artist Image">
+        {% endif %}
+
+        <ul>
+            {% for song in songs %}
+                <li>{{ song }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
