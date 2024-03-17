@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
+    {% block content %}
     <h1>Search Results</h1>
     <div>
         <h2>{{ results.name }}</h2>
@@ -12,10 +12,14 @@
             <img src="{{ results.images[0].url }}" alt="Artist Image">
         {% endif %}
 
-        <ul>
-            {% for song in songs %}
-                <li>{{ song }}</li>
-            {% endfor %}
-        </ul>
+        <h3>{{ results.name }} Top Songs</h3>
+        {% for song in songs %}
+            <li class="song-list">
+                <b>{{ song.name }}</b> 
+                <div>Popularity: {{ song.popularity }}</div>
+                <div>Album: {{ song.album }} </div>
+                <div>Album Released: {{ song.release_date }}</div>
+            </li>
+        {% endfor %}
     </div>
 {% endblock %}

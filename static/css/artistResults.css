@@ -1,0 +1,9 @@
+.song-list { 
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+.song-list div { 
+    margin-top: 5px; 
+    margin-left: 20px;
+}
