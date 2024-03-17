@@ -44,7 +44,7 @@ def user_profile_image(userInfo):
 
         # If user profile picture does not exist return a minion picture
         if not userProfileImg:
-            return "https://lh3.googleusercontent.com/proxy/M8xO2b1I7K0EwAa9EGdgnGuMSN-Uh56bZRJlPvdPk5whCL67YRrMKW4PEIdIlm6PVZvKJondQ0E3YO9TPcMH6jqqW3NBW7OSAjy3zTBvZVlYtJ5fh5MB__OemkT8D4o"
+            return "https://i.pinimg.com/originals/9c/ac/dc/9cacdc207e8997bf90a3daf9c8aaca80.jpg"
         else:
             return userProfileImg[1]['url']
     except Exception as error:
