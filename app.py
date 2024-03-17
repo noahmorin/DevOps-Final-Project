@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from searchArtist import artist_results
 from getAlbum import album_Results
-from albumTracks import get_album_tracks
+from getalbumTracks import get_album_tracks
 
 app = Flask(__name__)
 
