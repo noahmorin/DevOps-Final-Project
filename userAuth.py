@@ -16,7 +16,7 @@ def spotify_login():
  authParams = {
  'response_type': 'code',
  'client_id': os.getenv('CLIENT_ID'),
- 'redirect_uri': os.getenv('REDIRECT_URI'),
+ 'redirect_uri': 'http://127.0.0.1:5000/callback/',
  'scope': 'user-read-email user-read-private',
  'state': state,
  'show_dialog': 'true'
@@ -36,7 +36,7 @@ def set_token():
     'code': authCode,
     'client_id': os.getenv('CLIENT_ID'),
     'client_secret': os.getenv('CLIENT_SECRET'),
-    'redirect_uri': os.getenv('REDIRECT_URI')
+    'redirect_uri': 'http://127.0.0.1:5000/callback/'
     }
  
   reqToken = requests.post(getTokenUrl, data = getTokenParams)
