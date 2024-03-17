@@ -12,12 +12,13 @@ def search_Album(token, albums):
         try:
             jsonResult = json.loads(albumResult.content)
             if "albums" in jsonResult and "items" in jsonResult["albums"]:
-                return jsonResult["album"]["items"][0]
+                return jsonResult["albums"]["items"][0]
+            else:
+                raise ValueError("No albums found in Spotify API response")
         except ValueError:
             raise ValueError("Unexpected JSON response from Spotify API")
-        else:
-            raise Exception(f"Status Code {albumResult.status_code} and response: {albumResult.content}, while trying to search for album {albums}:")    
-    return jsonResult[0]
+    else:
+        raise Exception(f"Status Code {albumResult.status_code} and response: {albumResult.content}, while trying to search for album {albums}")
 
 def album_Results(albumName):
     token = get_token()

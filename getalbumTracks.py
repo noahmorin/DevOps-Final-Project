@@ -1,5 +1,5 @@
 from auth import get_token, get_auth_headers
-from getAlbum import searchAlbum, album_Results
+from getAlbum import search_Album, album_Results
 from requests import get, post, request
 import json
 
