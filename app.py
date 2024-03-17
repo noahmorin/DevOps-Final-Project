@@ -4,6 +4,7 @@ from userAuth import spotify_login, set_token
 from searchArtist import artist_results
 from getAlbum import album_results
 from getalbumTracks import get_album_tracks
+from searchSong import song_results
 
 app = Flask(__name__)
 
@@ -60,3 +61,12 @@ def search_album_route():
         return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
     else:
         return render_template('searchAlbum.html')
+
+@app.route('/searchSong', methods=['GET', 'POST'])
+def test_search_track_route():
+    if request.method == 'POST':
+        songName = request.form['track']
+        allResults = song_results(songName)
+        return render_template('songResults.html', all_results=allResults)
+    else:
+        return render_template('searchSong.html')
