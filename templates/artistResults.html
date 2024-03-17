@@ -17,7 +17,7 @@
             <li class="song-list">
                 <b><a href="{{ url_for('song_details_route', songName=song.name) }}">{{ song.name }}</a></b>
                 <div>Popularity: {{ song.popularity }}</div>
-                <div>Album: {{ song.album }} </div>
+                <div>Album: <a href="{{ url_for('album_details_route', albumName=song.album) }}">{{ song.album }}</a></div>
                 <div>Album Released: {{ song.release_date }}</div>
             </li>
         {% endfor %}

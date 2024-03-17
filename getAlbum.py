@@ -12,6 +12,7 @@ def search_album(token, albums):
         try:
             jsonResult = json.loads(albumResult.content)
             if "albums" in jsonResult and "items" in jsonResult["albums"]:
+                print(jsonResult["albums"]["items"][0])
                 return jsonResult["albums"]["items"][0]
             else:
                 raise ValueError("No albums found in Spotify API response")
@@ -25,3 +26,15 @@ def album_results(albumName):
     result = search_album(token, albumName)
 
     return result
+
+def get_album_tracks(albumName):
+
+    albumID = album_results(albumName)["id"]
+
+    token = get_token()
+    headers = get_auth_headers(token)
+    url = f"https://api.spotify.com/v1/albums/{albumID}/tracks?"
+
+    result = get(url, headers=headers)
+    trackData = json.loads(result.content)
+    return [track["name"] for track in trackData["items"]]

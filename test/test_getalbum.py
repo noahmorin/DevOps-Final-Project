@@ -1,6 +1,5 @@
 import unittest
-from getAlbum import album_results
-from getalbumTracks import get_album_tracks, trackData
+from getAlbum import album_results, album_results, get_album_tracks
 class test_searchAlbum(unittest.TestCase):
 
     def test_successful_album_search(self):

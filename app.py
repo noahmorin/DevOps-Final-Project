@@ -3,8 +3,8 @@ from userInfo import user_result, user_name, user_profile_image, user_playlist
 from userAuth import spotify_login, set_token
 from searchArtist import artist_results
 from artistTopTracks import get_artist_top_tracks
-from getAlbum import album_results
-from getalbumTracks import get_album_tracks
+from getAlbum import album_results, get_album_tracks
+# from getAlbumTracks import get_album_tracks
 from searchSong import song_results
 from recommender import get_genre_seeds, get_recommendation
 from werkzeug.datastructures import ImmutableMultiDict
@@ -66,12 +66,6 @@ def search_album_route():
     else:
         return render_template('searchAlbum.html')
 
-@app.route('/song/<songName>', methods=['GET'])
-def song_details_route(songName):
-    allResults = song_results(songName)
-    firstResult = allResults[0]
-    return render_template('songDetails.html', result=firstResult)
-
 @app.route('/searchSong', methods=['GET', 'POST'])
 def test_search_track_route():
     if request.method == 'POST':
@@ -94,3 +88,20 @@ def recommender_route():
     else:
         genres = get_genre_seeds()
         return render_template('recommender.html', genres=genres)
+    
+
+# For searching directly from searchArtist page. 
+@app.route('/album/<albumName>', methods=['GET'])
+def album_details_route(albumName):
+    albumResult = album_results(albumName)
+    tracks = get_album_tracks(albumName)
+
+    print("Album Result:", albumResult)  
+
+    return render_template('albumDetails.html', result=albumResult, tracks=tracks)
+
+@app.route('/song/<songName>', methods=['GET'])
+def song_details_route(songName):
+    allResults = song_results(songName)
+    firstResult = allResults[0]
+    return render_template('songDetails.html', result=firstResult)
