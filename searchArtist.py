@@ -1,6 +1,7 @@
 from auth import get_token, get_auth_headers
 from requests import get, post, request
 import json
+import flask
 
 def search_for_artist(token, artist):
     url = f"https://api.spotify.com/v1/search?q={artist}&type=artist&limit=1"
@@ -23,5 +24,6 @@ def search_for_artist(token, artist):
 def artist_results(artistName):
     token = get_token()
     result = search_for_artist(token, artistName)
-
+    if len(result) == 0:
+        return flask.render_template('noResults.html')
     return result

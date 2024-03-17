@@ -21,10 +21,10 @@ def call_api(url, headers): # API call to get the song data
 
 def song_results(songName): # Get the results from the api call, split up the 5 songs into the allResults list
     token = get_token()
-    results = search_for_song(token, songName)
+    results = search_for_song(token, songName) # use token and song name to feed into search for song function
     allResults = []
-    for result in results:
+    for result in results: # make list of all 5 songs
         allResults.append(result)
-    if len(allResults) == 0:
+    if len(allResults) == 0: # if no results, return noResults.html
         return render_template('noResults.html')
     return allResults

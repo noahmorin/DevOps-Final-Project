@@ -50,9 +50,12 @@ def call_back():
 def search_artist_route():
     if request.method == 'POST':
         artistName = request.form['artist']  # Get the artist name from the form in the searchArtist.html template
-        results = artist_results(artistName)
-        songs = get_artist_top_tracks(artistName)
-        return render_template('artistResults.html', results=results, songs=songs)  # Render results.html and pass variables to the template
+        try:
+            results = artist_results(artistName)
+            songs = get_artist_top_tracks(artistName)
+            return render_template('artistResults.html', results=results, songs=songs)  # Render results.html and pass variables to the template
+        except:
+            return render_template('noResults.html')
     else:
         return render_template('searchArtist.html')
     
@@ -60,9 +63,12 @@ def search_artist_route():
 def search_album_route():
     if request.method == 'POST':
         albumName = request.form['album']  # Get the album name from the form in the searchAlbum.html template
-        albumResult = album_results(albumName)
-        tracks = get_album_tracks(albumName)
-        return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+        try:
+            albumResult = album_results(albumName)
+            tracks = get_album_tracks(albumName)
+            return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+        except:
+            return render_template('noResults.html')
     else:
         return render_template('searchAlbum.html')
 
@@ -73,7 +79,7 @@ def test_search_track_route():
         try:
             allResults = song_results(songName)
             return render_template('songResults.html', all_results=allResults)
-        except Exception as e:
+        except:
             return render_template('noResults.html')
     else:
         return render_template('searchSong.html')
