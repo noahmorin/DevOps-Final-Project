@@ -7,10 +7,13 @@ def search_for_song(token, track): # This song will format the url and header fo
     url = f"https://api.spotify.com/v1/search?q={track}&type=track&limit=5"
     headers = get_auth_headers(token)
     results = call_api(url, headers)
-    try: # Parses json data from api call, if it fails, it will return an empty list
-        jsonResult = json.loads(results.content)["tracks"]["items"]
-    except:
-        jsonResult = []
+    if results.status_code == 200:
+        try: # Parses json data from api call, if it fails, it will return an empty list
+            jsonResult = json.loads(results.content)["tracks"]["items"]
+        except ValueError:
+            return ValueError("Unexpected JSON response")
+    else:
+        raise Exception(f"Status code {results.status_code} and response: {results.text}, while trying to search for {track}.")
     return jsonResult
 
 def call_api(url, headers):
@@ -19,8 +22,6 @@ def call_api(url, headers):
 def song_results(songName): # Get the results from the api call, split up the 5 songs into the allResults list
     token = get_token()
     results = search_for_song(token, songName)
-    if results == []: # if jsonResult is empty from error checking earlier, it will return a noResults.html page
-        return render_template('noResults.html')
     allResults = []
     for result in results:
         allResults.append(result)
