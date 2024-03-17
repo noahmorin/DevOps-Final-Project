@@ -48,5 +48,5 @@ Our project uses the Spotify Web API and allows the user to search for various i
 
 # How to run/use
 * Activate the virtual environment you made previously then use the command ```flask run```
-* Navigate to ```http://127.0.0.1:5000``` in your browser
+* Navigate to http://127.0.0.1:5000 in your browser
 * next step... NOT FINISHED
