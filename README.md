@@ -36,6 +36,15 @@ Our project uses the Spotify Web API and allows the user to search for various i
        - ex: ```C:\code\DevOpsProject> .\testenv\Scripts\activate```
      - Install the required packages
        - ```(testenv) PS C:\code\DevOpsProject> pip install -r .\requirements.txt```
+  - Create virtual environment in a dedicated folder
+    - Navigate to the folder you want to create the virtual environment in
+      - ex: ```cd \path\to\virtualenvironmentsfolder```
+    - Run the command ```python -m venv <name of virtual environment>```
+      - ex: ```C:\code\DevOpsProject> python -m venv testenv```
+    - Activate the new virtual environment
+      - ex: ```C:\code\DevOpsProject> .\testenv\Scripts\activate```
+    - Install the required packages
+      - ```(testenv) PS C:\code\DevOpsProject> pip install -r .\requirements.txt```
 
 # How to run/use
 * Activate the virtual environment you made previously then use the command ```flask run```
