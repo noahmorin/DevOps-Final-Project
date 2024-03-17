@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Song Recommender</h1>
+    <form action="/recommender" method="post">
+        <h3>Select Up To 5 Genres</h3>
+        <div id="genreGroup"></div>
+        <br>
+        <input type="submit">
+    </form>
+
+    <script>
+        // Line 14 returns an error, though code runs fine with it. Not sure. ???
+        // @ts-ignore 
+        var genres = {{ genres | tojson }};
+
+        // Function to limit the amount of genres allowed to be selected
+        function max_genre_check() {
+            var genreGroup = document.getElementById('genreGroup').getElementsByTagName("input"); // Get the genreGroup div (includes the checkbox list)
+            var limit = 5;
+        
+            // Iterate through the entire length of the checkboxes, run the function block every time a checkbox is clicked
+            for (var i = 0; i < genreGroup.length; i++) {
+                genreGroup[i].onclick = function() {
+                    var checkedCount = 0;
+                        for (var i = 0; i < genreGroup.length; i++) {
+                            checkedCount += (genreGroup[i].checked) ? 1 : 0; // Add 1 to checkedCount every time a checkbox is ticked
+                        
+                    }
+                    // if the amount of checkboxes ticked is greater than the limit (set to 5) alert the user and uncheck the checkbox
+                    if (checkedCount > limit) {
+                        alert("You can select a maximum of " + limit + " genres.");
+                        this.checked = false;
+                    }
+                }
+            }
+        }
+        // Function to return the available genres from the Spotify API, parse them into a list of checkboxes that can be clicked individually
+        function parse_genres(){
+            genresObj = genres.genres;
+            var genCheckboxes = "";
+            // Function that iterates through the length of the genresObj object (list of genres from spotify API)
+            for (var i = 0; i < genresObj.length; i++){
+                // For every 12 items iterated, add a linebreak to the list (cleans up formatting so that list is not entirely horizontal or vertical.)
+                if (i % 12 == 0){
+                    genCheckboxes += '<br>';
+                }
+                //genCheckboxes veriable stores the HTML element to be pushed to empty DIV. Each iteration of the loop equates to a genre, format that genre into a checkbox with the proper name, value, and title
+                genCheckboxes += '<input type="checkbox" name="'+genresObj[i]+'" value="'+ genresObj[i] +'"><b>' + genresObj[i] + '</b></input>  ';
+                
+            }
+            document.getElementById('genreGroup').innerHTML = genCheckboxes; // Push the genCheckboxes into the empty div, genreGroup
+        }
+    </script>
+
+    <script type="text/javascript"> // Run both functions in the HTML.
+        parse_genres()
+        max_genre_check()
+    </script>
+{% endblock %}

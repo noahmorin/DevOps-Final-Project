@@ -6,6 +6,8 @@ from artistTopTracks import get_artist_top_tracks
 from getAlbum import album_results
 from getalbumTracks import get_album_tracks
 from searchSong import song_results
+from recommender import get_genre_seeds, get_recommendation
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
 
@@ -72,3 +74,17 @@ def test_search_track_route():
         return render_template('songResults.html', all_results=allResults)
     else:
         return render_template('searchSong.html')
+
+@app.route('/recommender', methods=['GET', 'POST'])
+def recommender_route():
+    if request.method == 'POST':
+        seedGenres = ""
+        genreDict = request.form.to_dict(flat=False) # Get the results from the HTML form (selecting genres) turn the immutible dictionary object into a dictionary
+        for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
+            seedGenres += genre + "&"
+        songRecommendation = get_recommendation(seedGenres)
+
+        return render_template('recommendation.html', results = songRecommendation)
+    else:
+        genres = get_genre_seeds()
+        return render_template('recommender.html', genres=genres)
