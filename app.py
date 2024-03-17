@@ -70,8 +70,11 @@ def search_album_route():
 def test_search_track_route():
     if request.method == 'POST':
         songName = request.form['track']
-        allResults = song_results(songName)
-        return render_template('songResults.html', all_results=allResults)
+        try:
+            allResults = song_results(songName)
+            return render_template('songResults.html', all_results=allResults)
+        except Exception as e:
+            return render_template('noResults.html')
     else:
         return render_template('searchSong.html')
 

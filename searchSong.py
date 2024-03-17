@@ -25,4 +25,6 @@ def song_results(songName): # Get the results from the api call, split up the 5 
     allResults = []
     for result in results:
         allResults.append(result)
+    if len(allResults) == 0:
+        return render_template('noResults.html')
     return allResults
