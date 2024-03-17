@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from userInfo import user_result, user_name, user_profile_image, user_playlist
+from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track
 from userAuth import spotify_login, set_token
 from searchArtist import artist_results
 from artistTopTracks import get_artist_top_tracks
@@ -31,7 +31,9 @@ def user_info_route():
        userName = user_name(userProfileInfo)
        userProfileImg = user_profile_image(userProfileInfo)
        userPlaylistInfo = user_playlist()
-       return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo)
+       userTopArtistInfo = user_top_artist()
+       userTopTrackInfo = user_top_track()
+       return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo, artists = userTopArtistInfo, tracks = userTopTrackInfo)
 
 # Link to allow user to log into spotify account
 @app.route('/login', methods=['GET', 'POST'])

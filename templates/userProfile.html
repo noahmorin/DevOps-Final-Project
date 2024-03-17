@@ -28,5 +28,14 @@
         <a>{{key}}</a>
     {% endfor %}
 
+    <br />
+    <h2>User Top Tracks</h2>
+
+    {% for key, value in tracks.items() %}
+        <br />
+        <a><img src="{{value}}" width="200" height="200"></a>
+        <a>{{key}}</a>
+    {% endfor %}
+
 
 {% endblock %}
