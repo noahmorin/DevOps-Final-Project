@@ -80,9 +80,12 @@ def recommender_route():
     if request.method == 'POST':
         seedGenres = ""
         genreDict = request.form.to_dict(flat=False) # Get the results from the HTML form (selecting genres) turn the immutible dictionary object into a dictionary
-        for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
-            seedGenres += genre + "&"
-        songRecommendation = get_recommendation(seedGenres)
+        if len(genreDict) > 0:
+            for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
+                seedGenres += genre + "&"
+            songRecommendation = get_recommendation(seedGenres)
+        else:
+            songRecommendation = "Please select at least 1 genre"
 
         return render_template('recommendation.html', results = songRecommendation)
     else:
