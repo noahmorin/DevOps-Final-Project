@@ -8,7 +8,7 @@ def search_for_song(token, track): # This song will format the url and header fo
     headers = get_auth_headers(token)
     results = call_api(url, headers)
     if results.status_code == 200:
-        try: # Parses json data from api call, if it fails, it will return an empty list
+        try: # Parses json data from api call, if it fails, it will return the ValueError message
             jsonResult = json.loads(results.content)["tracks"]["items"]
         except ValueError:
             return ValueError("Unexpected JSON response")
@@ -16,7 +16,7 @@ def search_for_song(token, track): # This song will format the url and header fo
         raise Exception(f"Status code {results.status_code} and response: {results.text}, while trying to search for {track}.")
     return jsonResult
 
-def call_api(url, headers):
+def call_api(url, headers): # API call to get the song data
     return get(url, headers=headers)
 
 def song_results(songName): # Get the results from the api call, split up the 5 songs into the allResults list
