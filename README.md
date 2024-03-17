@@ -5,7 +5,7 @@ Our project uses the Spotify Web API and allows the user to search for various i
 - Search for a Spotify artist, which displays different information about them, like their photo and style of music
 - Displays an artists most popular songs, and displays which album they are part of and when that album was released
 - With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search, get to this feature using .../searchSong or click Song hyperlink on any webpage
-- 
+- With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artise name.
 
 
 # How to install
