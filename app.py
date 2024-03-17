@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from userInfo import user_result, user_name, user_profile_image, userPlaylist
+from userInfo import user_result, user_name, user_profile_image, user_playlist
 from userAuth import spotify_login, set_token
 
 app = Flask(__name__)
@@ -19,18 +19,18 @@ def user_info_route():
     else:
        userName = user_name(userProfileInfo)
        userProfileImg = user_profile_image(userProfileInfo)
-       userPlaylistInfo = userPlaylist()
+       userPlaylistInfo = user_playlist()
        return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo)
 
 # Link to allow user to log into spotify account
 @app.route('/login', methods=['GET', 'POST'])
-def userLogin():
+def user_login():
    # Gets the link from spotify_login page and redirects to login link
    authUrl = spotify_login()
    return redirect(authUrl)
 
 @app.route('/callback/')
-def callBack():
+def call_back():
    # Set the token in the .env file and redirects back to user profile page
    set_token()
    return redirect('/userInfo')

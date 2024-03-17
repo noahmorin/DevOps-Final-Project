@@ -51,7 +51,7 @@ def user_profile_image(userInfo):
         raise Exception("Unexpected Error: {}".format(error))
 
 # Get user playlist
-def userPlaylist():
+def user_playlist():
     # Calls the spotify api to get user playlist
     userPlaylistUrl = 'https://api.spotify.com/v1/me/playlists?limit=20'
     headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
