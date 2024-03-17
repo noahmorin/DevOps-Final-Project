@@ -16,7 +16,6 @@ def get_artist_top_tracks(artistName):
     if result.status_code == 200:
         try:
             topTracks = json.loads(result.content)
-            print(topTracks)
 
             if "tracks" in topTracks:
                 return [{
