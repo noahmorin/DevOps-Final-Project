@@ -24,4 +24,19 @@ def artist_results(artistName):
     token = get_token()
     result = search_for_artist(token, artistName)
 
-    return result
+    popularity = result["popularity"]
+    imageKey = None
+
+    # check popularity for 0-20, 21-40, 41-60, 61-80, 81-100
+    if popularity < 20:
+        imageKey = 'minion5'
+    elif popularity < 40:
+        imageKey = 'minion4'
+    elif popularity < 60:
+        imageKey = 'minion3'
+    elif popularity < 80:
+        imageKey = 'minion2'
+    else:
+        imageKey = 'minion1'
+
+    return result, imageKey

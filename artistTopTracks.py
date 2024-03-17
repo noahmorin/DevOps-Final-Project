@@ -6,7 +6,9 @@ import json
 def get_artist_top_tracks(artistName):
 
     token = get_token()
-    artistID = artist_results(artistName)["id"]
+
+    artistResults, imageKey = artist_results(artistName)
+    artistID = artistResults["id"]
 
     url = f"https://api.spotify.com/v1/artists/{artistID}/top-tracks?market=CA"
     headers = get_auth_headers(token)
