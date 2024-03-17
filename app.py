@@ -66,6 +66,12 @@ def search_album_route():
     else:
         return render_template('searchAlbum.html')
 
+@app.route('/song/<songName>', methods=['GET'])
+def song_details_route(songName):
+    allResults = song_results(songName)
+    firstResult = allResults[0]
+    return render_template('songDetails.html', result=firstResult)
+
 @app.route('/searchSong', methods=['GET', 'POST'])
 def test_search_track_route():
     if request.method == 'POST':

@@ -15,7 +15,7 @@
         <h3>{{ results.name }} Top Songs</h3>
         {% for song in songs %}
             <li class="song-list">
-                <b>{{ song.name }}</b> 
+                <b><a href="{{ url_for('song_details_route', songName=song.name) }}">{{ song.name }}</a></b>
                 <div>Popularity: {{ song.popularity }}</div>
                 <div>Album: {{ song.album }} </div>
                 <div>Album Released: {{ song.release_date }}</div>
