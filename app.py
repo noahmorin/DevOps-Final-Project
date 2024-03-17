@@ -2,11 +2,17 @@ from flask import Flask, render_template, request, redirect
 from userInfo import user_result, user_name, user_profile_image, user_playlist
 from userAuth import spotify_login, set_token
 from searchArtist import artist_results
+from getAlbum import album_results
+from getalbumTracks import get_album_tracks
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    return render_template('minioninifier.html')
+
+@app.route('/home', methods=['GET', 'POST']) 
+def home():
     return render_template('home.html')
 
 # Link to user profile
@@ -44,3 +50,13 @@ def search_artist_route():
         return render_template('artistResults.html', results=results)  # Render results.html and pass variables to the template
     else:
         return render_template('searchArtist.html')
+    
+@app.route('/searchAlbum', methods=['GET', 'POST'])
+def search_album_route():
+    if request.method == 'POST':
+        albumName = request.form['album']  # Get the album name from the form in the searchAlbum.html template
+        albumResult = album_results(albumName)
+        tracks = get_album_tracks(albumName)
+        return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+    else:
+        return render_template('searchAlbum.html')
