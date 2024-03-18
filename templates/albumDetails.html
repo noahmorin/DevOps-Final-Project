@@ -16,14 +16,10 @@
 
     <h3>Album Songs</h3>
     <ol>
-        {% if tracks %}  
-          {% for track in tracks %} 
-            <li>{{ track }}</li> 
-          {% endfor %}
-        {% else %}
-          <li>No tracks found.</li> 
-        {% endif %}
-      </ol>
+        {% for track in tracks %} 
+            <a href="{{ url_for('song_details_route', songName=track) }}"><li>{{ track }}</li></a>
+        {% endfor %}
+    </ol>
 
     <p>Album URL: <a href="{{ result.external_urls.spotify }}">{{ result.external_urls.spotify }}</a></p>
 {% endblock %}

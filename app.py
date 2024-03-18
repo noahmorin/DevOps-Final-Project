@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from userInfo import user_result, user_name, user_profile_image, user_playlist
 from userAuth import spotify_login, set_token
-from searchArtist import artist_results
+from searchArtist import artist_results, get_artist_albums
 from artistTopTracks import get_artist_top_tracks
 from getAlbum import album_results, get_album_tracks
 # from getAlbumTracks import get_album_tracks
@@ -52,7 +52,8 @@ def search_artist_route():
         artistName = request.form['artist']  # Get the artist name from the form in the searchArtist.html template
         results = artist_results(artistName)
         songs = get_artist_top_tracks(artistName)
-        return render_template('artistResults.html', results=results, songs=songs)  # Render results.html and pass variables to the template
+        albums = get_artist_albums(artistName)
+        return render_template('artistResults.html', results=results, songs=songs, albums=albums)  # Render results.html and pass variables to the template
     else:
         return render_template('searchArtist.html')
     
@@ -95,9 +96,6 @@ def recommender_route():
 def album_details_route(albumName):
     albumResult = album_results(albumName)
     tracks = get_album_tracks(albumName)
-
-    print("Album Result:", albumResult)  
-
     return render_template('albumDetails.html', result=albumResult, tracks=tracks)
 
 @app.route('/song/<songName>', methods=['GET'])

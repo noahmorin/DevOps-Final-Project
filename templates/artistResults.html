@@ -21,5 +21,15 @@
                 <div>Album Released: {{ song.release_date }}</div>
             </li>
         {% endfor %}
+
+        <h3>Albums</h3>
+        {% for album in albums %}
+            <li class="song-list"> 
+                <b><a href="{{ url_for('album_details_route', albumName=album.name) }}">{{ album.name }}</a></b>
+                <div>Release Date: {{ album.release_date }}</div>
+                <div>Total Tracks: {{ album.total_tracks }}</div>
+            </li>
+        {% endfor %}
+
     </div>
 {% endblock %}
