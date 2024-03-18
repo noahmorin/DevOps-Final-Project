@@ -82,3 +82,68 @@ def user_playlist():
     else:
         raise Exception(f"Status code {playlistResult.status_code} and response: {playlistResult.content} when pulling user profile.")
     
+# Get user top artists
+def user_top_artist():
+    # Calls the spotify api to get user top artists
+    userTopArtistUrl = 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10'
+    headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
+    topArtistResult = get(userTopArtistUrl, headers=headers)
+    
+    # Checks to make sure that call was successful and return user top artists as a dictionary
+    if topArtistResult.status_code == 200:
+        topArtistStore = topArtistResult.json()
+        topArtistInfo = topArtistStore['items']
+        topArtist = {}
+
+        for artist in topArtistInfo:
+            # Checks if each artist has an image and if not it adds a minion profile picture
+            try:
+                tempArtist = artist['images'][0]['url']
+            except IndexError:
+                tempArtist = 'https://i.ytimg.com/vi/2pFuprTphvs/maxresdefault.jpg'
+            except Exception as error:
+                raise Exception("Unexpected Error: {}".format(error))
+            
+            topArtist[artist['name']] = tempArtist
+        
+        if not topArtist:
+            # If there no top artists can be found then returns a message informing user
+            topArtist["Not enough information! You have to listen to more songs."] = "https://i.ytimg.com/vi/2pFuprTphvs/maxresdefault.jpg"
+
+        return topArtist
+    else:
+        raise Exception(f"Status code {topArtistResult.status_code} and response: {topArtistResult.content} when pulling user profile.")
+
+# Get user top track
+def user_top_track():
+    # Calls the spotify api to get user top tracks
+    userTopTrackUrl = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10'
+    headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
+    topTrackResult = get(userTopTrackUrl, headers=headers)
+    
+    # Checks to make sure that call was successful and return user top track as a dictionary
+    if topTrackResult.status_code == 200:
+        topTrackStore = topTrackResult.json()
+        topTrackInfo = topTrackStore['items']
+        topTrack = {}
+
+        for track in topTrackInfo:
+            # Checks if each track has an album image and if not it adds a minion album picture
+            try:
+                trackAlbum = track['album']
+                tempTrack = trackAlbum['images'][0]['url']
+            except IndexError:
+                tempTrack = 'https://i.ytimg.com/vi/2pFuprTphvs/maxresdefault.jpg'
+            except Exception as error:
+                raise Exception("Unexpected Error: {}".format(error))
+            
+            topTrack[track['name']] = tempTrack
+        
+        if not topTrack:
+            # If there no top tracks can be found then returns a message informing user
+            topTrack["Not enough information! You have to listen to more songs."] = "https://i.ytimg.com/vi/3CgWPddfJ7k/maxresdefault.jpg"
+
+        return topTrack
+    else:
+        raise Exception(f"Status code {topTrackResult.status_code} and response: {topTrackResult.content} when pulling user profile.")
+    
