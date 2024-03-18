@@ -17,7 +17,11 @@
     <h3>Album Songs</h3>
     <ol>
         {% for track in tracks %} 
-            <b><a href="/song/{{ track.id }}">{{ track }}</a></b>
+            <!-- <b><a href="/song/{{ track.id }}">{{ track }}</a></b> -->
+            <li>
+                {{ track }} 
+                {{ track.id }}
+            </li>
         {% endfor %}
     </ol>
 
