@@ -55,10 +55,26 @@ def get_album_by_id(token, albumID):
     return albumData     
 
 def get_album_tracks_by_id(token, albumID):
+
     token = get_token()
+    url = f"https://api.spotify.com/v1/albums/{albumID}/tracks"
     headers = get_auth_headers(token)
-    url = f"https://api.spotify.com/v1/albums/{albumID}/tracks?"
 
     result = get(url, headers=headers)
     trackData = json.loads(result.content)
-    return [track["name"] for track in trackData["items"]] 
+
+    if result.status_code == 200:
+        try:
+            trackData = json.loads(result.content)
+
+            if "items" in trackData:
+                return [{'name': track["name"], 'id': track["id"]} for track in trackData["items"]]
+            
+        except ValueError:
+            raise ValueError("Received unexpected JSON response from Spotify API")
+        
+    else:
+        raise Exception(f"Status Code {result.status_code} and response: {result.content}, while trying to get tracks for album {albumID}")
+
+
+
