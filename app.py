@@ -51,9 +51,9 @@ def search_artist_route():
     if request.method == 'POST':
         artistName = request.form['artist']  # Get the artist name from the form in the searchArtist.html template
         try:
-            results = artist_results(artistName)
+            results, imageKey = artist_results(artistName)
             songs = get_artist_top_tracks(artistName)
-            return render_template('artistResults.html', results=results, songs=songs)  # Render results.html and pass variables to the template
+            return render_template('artistResults.html', results=results, songs=songs, imageKey=imageKey, query=artistName)  # Render results.html and pass variables to the template
         except:
             return render_template('noResults.html')
     else:
@@ -89,9 +89,12 @@ def recommender_route():
     if request.method == 'POST':
         seedGenres = ""
         genreDict = request.form.to_dict(flat=False) # Get the results from the HTML form (selecting genres) turn the immutible dictionary object into a dictionary
-        for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
-            seedGenres += genre + "&"
-        songRecommendation = get_recommendation(seedGenres)
+        if len(genreDict) > 0:
+            for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
+                seedGenres += genre + "&"
+            songRecommendation = get_recommendation(seedGenres)
+        else:
+            songRecommendation = "Please select at least 1 genre"
 
         return render_template('recommendation.html', results = songRecommendation)
     else:
