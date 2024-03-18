@@ -15,19 +15,21 @@
         <h3>{{ results.name }} Top Songs</h3>
         {% for song in songs %}
             <li class="song-list">
-                <b><a href="{{ url_for('song_details_route', songName=song.name) }}">{{ song.name }}</a></b>
+                <b><a href="/song/{{ song.id }}">{{ song.name }}</a></b>
                 <div>Popularity: {{ song.popularity }}</div>
-                <div>Album: <a href="{{ url_for('album_details_route', albumName=song.album) }}">{{ song.album }}</a></div>
+                <div>Album: {{ song.album }}</a></div>
                 <div>Album Released: {{ song.release_date }}</div>
+                <!-- <div>Song ID: {{ song.id }}</div> -->
             </li>
         {% endfor %}
 
         <h3>Albums</h3>
         {% for album in albums %}
             <li class="song-list"> 
-                <b><a href="{{ url_for('album_details_route', albumName=album.name) }}">{{ album.name }}</a></b>
+                <a href="/album/{{ album.id }}">{{ album.name }}</a>
                 <div>Release Date: {{ album.release_date }}</div>
                 <div>Total Tracks: {{ album.total_tracks }}</div>
+                <div>Album ID: {{ album.id }}</div>
             </li>
         {% endfor %}
 

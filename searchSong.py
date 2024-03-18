@@ -4,7 +4,7 @@ import json
 from flask import render_template
 
 def search_for_song(token, track): # This song will format the url and header for the api call, using auth data and what user put for song name
-    url = f"https://api.spotify.com/v1/search?q={track}&type=track&limit=5"
+    url = f"https://api.spotify.com/v1/search?q={track}&type=track&limit=1"
     headers = get_auth_headers(token)
     results = call_api(url, headers)
     if results.status_code == 200:
@@ -26,3 +26,17 @@ def song_results(songName): # Get the results from the api call, split up the 5 
     for result in results:
         allResults.append(result)
     return allResults
+
+def search_for_song_by_id(token, songID):
+    url = f"https://api.spotify.com/v1/tracks/{songID}"
+    headers = get_auth_headers(token)
+    results = call_api(url, headers)
+    
+    if results.status_code == 200:
+        try:
+            jsonResult = json.loads(results.content)
+        except ValueError:
+            return ValueError("Unexpected JSON response")
+    else:
+        raise Exception(f"Status code {results.status_code} and response: {results.text}, while trying to search for {songID}.")
+    return jsonResult

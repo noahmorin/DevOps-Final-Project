@@ -17,7 +17,7 @@
     <h3>Album Songs</h3>
     <ol>
         {% for track in tracks %} 
-            <a href="{{ url_for('song_details_route', songName=track) }}"><li>{{ track }}</li></a>
+            <b><a href="/song/{{ track.id }}">{{ track }}</a></b>
         {% endfor %}
     </ol>
 

@@ -43,6 +43,7 @@ def get_artist_albums(artistName):
                     "name": album["name"],
                     "release_date": album["release_date"],
                     "total_tracks": album["total_tracks"],
+                    "id": album["id"],
                 }
                 for album in artistAlbums["items"]]
         
