@@ -2,7 +2,7 @@ import unittest
 import requests
 import json
 from auth import get_token, get_auth_headers
-from final-project-group-3.recommender import get_genre_seeds, get_recommendation, recommendation_api_call
+from recommender import get_genre_seeds, get_recommendation, recommendation_api_call
 
 class test_recommender(unittest.TestCase):
 
