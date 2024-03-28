@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, redirect
 from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track
 from userAuth import spotify_login, set_token
-from searchArtist import artist_results
+from searchArtist import artist_results, get_artist_albums
 from artistTopTracks import get_artist_top_tracks
-from getAlbum import album_results
-from getalbumTracks import get_album_tracks
-from searchSong import song_results
+from getAlbum import album_results, get_album_tracks, get_album_by_id, get_album_tracks_by_id
+# from getAlbumTracks import get_album_tracks
+from searchSong import song_results, search_for_song_by_id
 from recommender import get_genre_seeds, get_recommendation
+from auth import get_token
 from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
@@ -55,7 +56,9 @@ def search_artist_route():
         try:
             results, imageKey = artist_results(artistName)
             songs = get_artist_top_tracks(artistName)
-            return render_template('artistResults.html', results=results, songs=songs, imageKey=imageKey, query=artistName)  # Render results.html and pass variables to the template
+            albums = get_artist_albums(artistName)
+
+            return render_template('artistResults.html', results=results, songs=songs, albums=albums, imageKey=imageKey, query=artistName)  # Render results.html and pass variables to the template
         except:
             return render_template('noResults.html')
     else:
@@ -102,3 +105,16 @@ def recommender_route():
     else:
         genres = get_genre_seeds()
         return render_template('recommender.html', genres=genres)
+    
+
+# For searching directly from searchArtist page. 
+@app.route('/album/<albumID>', methods=['GET'])
+def album_details_route(albumID):
+    result = get_album_by_id(get_token(), albumID)
+    tracks = get_album_tracks_by_id(get_token(), albumID)
+    return render_template('albumDetails.html', result=result, tracks=tracks)
+
+@app.route('/song/<songID>', methods=['GET'])
+def song_details_route(songID):
+    result = search_for_song_by_id(get_token(), songID)
+    return render_template('songDetails.html', result=result)

@@ -25,6 +25,7 @@ def get_artist_top_tracks(artistName):
                     "album": track["album"]["name"],
                     "release_date": track["album"]["release_date"],
                     "popularity": track["popularity"],
+                    "id": track["id"],
                 }
                 for track in topTracks["tracks"]]
             
