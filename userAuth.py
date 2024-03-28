@@ -17,7 +17,7 @@ def spotify_login():
  'response_type': 'code',
  'client_id': os.getenv('CLIENT_ID'),
  'redirect_uri': os.getenv('REDIRECT_URI'),
- 'scope': 'user-read-email user-read-private',
+ 'scope': 'user-read-email user-read-private user-top-read',
  'state': state,
  'show_dialog': 'true'
  }

@@ -1,6 +1,7 @@
 from auth import get_token, get_auth_headers
 from requests import get, post, request
 import json
+import flask
 
 def search_album(token, albums):
     url = f"https://api.spotify.com/v1/search?q={albums}&type=album&limit=1"
@@ -24,7 +25,8 @@ def search_album(token, albums):
 def album_results(albumName):
     token = get_token()
     result = search_album(token, albumName)
-
+    if len(result) == 0:
+        return flask.render_template('noResults.html')
     return result
 
 def get_album_tracks(albumName):

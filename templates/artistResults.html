@@ -1,16 +1,19 @@
 {% extends "base.html" %}
     {% block content %}
-    <h1>Search Results</h1>
+    <h1>Search Results for "{{ query }}"</h1>
     <div>
         <h2>{{ results.name }}</h2>
-        <p>ID: {{ results.id }}</p>
+        <p>Popularity: {{ results.popularity }}</p>
         <p>Followers: {{ results.followers.total }}</p>
         <p>Genres: {{ results.genres | join(', ') }}</p>
         <p>URL: <a href="{{ results.external_urls.spotify}}">{{ results.external_urls.spotify }}</a></p>
 
-        {% if results.images %}
-            <img src="{{ results.images[0].url }}" alt="Artist Image">
-        {% endif %}
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <img src="{{ results.images[0].url }}" style="width: 640px; height: 640px;"alt="Artist Image" class='artistImage'>
+            <img src="/static/images/{{ imageKey }}.jpg" style="width: 640px; height: 640px; display: none;" alt="Minionified Artist Image" class="artistImage">
+            <button id="toggleImageButton" class="btn btn-primary">Minionify Artist</button>
+        </div>
+
 
         <h3>{{ results.name }} Top Songs</h3>
         {% for song in songs %}

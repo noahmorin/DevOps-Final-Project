@@ -2,12 +2,12 @@
 Our project uses the Spotify Web API and allows the user to search for various information about artists, songs, albums, and more.
 
 # Features
-- Search for a Spotify artist, which displays different information about them, like their photo and style of music
-- Displays an artists most popular songs, and displays which album they are part of and when that album was released
-- With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search, get to this feature using .../searchSong or click Song hyperlink on any webpage
+- Search for a Spotify artist, which displays different information about them, like their photo and style of music.
+- Displays an artists most popular songs, and displays which album they are part of and when that album was released.
+- With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search, get to this feature using .../searchSong or click Song hyperlink on any webpage.
 - With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artise name.
 - Song Recommender feature that accepts up to 5 genres to be selected and recommends a song to the user. Song recommendations tailored to match the minion theme.
-- User Profile feature allows users to log in with their Spotify account to view their profile information. This includes their username, profile image, and their playlists.
+- User Profile feature allows users to log in with their Spotify account to view their profile information. This includes their username, profile image, playlists, top artists and top songs.
 
 
 # How to install
@@ -53,4 +53,7 @@ Our project uses the Spotify Web API and allows the user to search for various i
 # How to run/use
 * Activate the virtual environment you made previously then use the command ```flask run```
 * Navigate to http://127.0.0.1:5000 in your browser
-* next step... NOT FINISHED
+* Use the navigation bar to navigate to the different features of the website
+* To use the search features, enter the name of the artist, song, or album you want to search for in the search bar and click the search button.
+* To use the song recommender feature, select the 'Recommender' navigation menu, then select up to 5 music genres and click the submit button. You will be given a song recommendation based on the genres you selected.
+* To use the user profile feature, click the 'User Profile' navigation menu and log in with your Spotify account. You will be able to view your profile information.

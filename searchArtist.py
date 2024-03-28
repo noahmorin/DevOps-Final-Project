@@ -1,6 +1,7 @@
 from auth import get_token, get_auth_headers
 from requests import get, post, request
 import json
+import flask
 
 def search_for_artist(token, artist):
     url = f"https://api.spotify.com/v1/search?q={artist}&type=artist&limit=1"
@@ -22,8 +23,24 @@ def search_for_artist(token, artist):
 def artist_results(artistName):    
     token = get_token()
     result = search_for_artist(token, artistName)
+    if len(result) == 0:
+        return flask.render_template('noResults.html')
+    popularity = result["popularity"]
+    imageKey = None
 
-    return result
+    # check popularity for 0-20, 21-40, 41-60, 61-80, 81-100
+    if popularity < 20:
+        imageKey = 'minion5'
+    elif popularity < 40:
+        imageKey = 'minion4'
+    elif popularity < 60:
+        imageKey = 'minion3'
+    elif popularity < 80:
+        imageKey = 'minion2'
+    else:
+        imageKey = 'minion1'
+
+    return result, imageKey
 
 def get_artist_albums(artistName):
 

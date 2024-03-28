@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from userInfo import user_result, user_name, user_profile_image, user_playlist
+from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track
 from userAuth import spotify_login, set_token
 from searchArtist import artist_results, get_artist_albums
 from artistTopTracks import get_artist_top_tracks
@@ -32,7 +32,9 @@ def user_info_route():
        userName = user_name(userProfileInfo)
        userProfileImg = user_profile_image(userProfileInfo)
        userPlaylistInfo = user_playlist()
-       return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo)
+       userTopArtistInfo = user_top_artist()
+       userTopTrackInfo = user_top_track()
+       return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo, artists = userTopArtistInfo, tracks = userTopTrackInfo)
 
 # Link to allow user to log into spotify account
 @app.route('/login', methods=['GET', 'POST'])
@@ -51,12 +53,14 @@ def call_back():
 def search_artist_route():
     if request.method == 'POST':
         artistName = request.form['artist']  # Get the artist name from the form in the searchArtist.html template
-        results = artist_results(artistName)
+        try:
+            results, imageKey = artist_results(artistName)
+            songs = get_artist_top_tracks(artistName)
+            albums = get_artist_albums(artistName)
 
-        songs = get_artist_top_tracks(artistName)
-        albums = get_artist_albums(artistName)
-
-        return render_template('artistResults.html', results=results, songs=songs, albums=albums)  # Render results.html and pass variables to the template
+            return render_template('artistResults.html', results=results, songs=songs, albums=albums, imageKey=imageKey, query=artistName)  # Render results.html and pass variables to the template
+        except:
+            return render_template('noResults.html')
     else:
         return render_template('searchArtist.html')
     
@@ -64,9 +68,12 @@ def search_artist_route():
 def search_album_route():
     if request.method == 'POST':
         albumName = request.form['album']  # Get the album name from the form in the searchAlbum.html template
-        albumResult = album_results(albumName)
-        tracks = get_album_tracks(albumName)
-        return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+        try:
+            albumResult = album_results(albumName)
+            tracks = get_album_tracks(albumName)
+            return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+        except:
+            return render_template('noResults.html')
     else:
         return render_template('searchAlbum.html')
 
@@ -74,8 +81,11 @@ def search_album_route():
 def test_search_track_route():
     if request.method == 'POST':
         songName = request.form['track']
-        allResults = song_results(songName)
-        return render_template('songResults.html', all_results=allResults)
+        try:
+            allResults = song_results(songName)
+            return render_template('songResults.html', all_results=allResults)
+        except:
+            return render_template('noResults.html')
     else:
         return render_template('searchSong.html')
 
@@ -84,9 +94,12 @@ def recommender_route():
     if request.method == 'POST':
         seedGenres = ""
         genreDict = request.form.to_dict(flat=False) # Get the results from the HTML form (selecting genres) turn the immutible dictionary object into a dictionary
-        for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
-            seedGenres += genre + "&"
-        songRecommendation = get_recommendation(seedGenres)
+        if len(genreDict) > 0:
+            for genre in genreDict: # Format list of genres into seed genres (i.e country&rock&rap)
+                seedGenres += genre + "&"
+            songRecommendation = get_recommendation(seedGenres)
+        else:
+            songRecommendation = "Please select at least 1 genre"
 
         return render_template('recommendation.html', results = songRecommendation)
     else:
