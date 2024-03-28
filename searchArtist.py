@@ -23,8 +23,10 @@ def search_for_artist(token, artist):
 def artist_results(artistName):    
     token = get_token()
     result = search_for_artist(token, artistName)
+
     if len(result) == 0:
         return flask.render_template('noResults.html')
+    
     popularity = result["popularity"]
     imageKey = None
 
@@ -43,9 +45,10 @@ def artist_results(artistName):
     return result, imageKey
 
 def get_artist_albums(artistName):
-
     token = get_token()
-    artistID = artist_results(artistName)["id"]
+
+    artistResult, _ = artist_results(artistName)
+    artistID = artistResult["id"]
 
     url = f"https://api.spotify.com/v1/artists/{artistID}/albums"
     headers = get_auth_headers(token)
