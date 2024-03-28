@@ -20,13 +20,15 @@ def get_genre_seeds():
     return jsonResult
 
 def recommendation_api_call(token, seedGenres):
-    url = f"https://api.spotify.com/v1/recommendations?limit=1&seed_genres={seedGenres}"
+    url = f"https://api.spotify.com/v1/recommendations?limit=5&seed_genres={seedGenres}"
     headers = get_auth_headers(token)
     result = get(url, headers=headers)
 
     if result.status_code == 200:
         try:
-            recommendedSong = json.loads(result.content)["tracks"][0]["name"]
+            # recommendedSong = json.loads(result.content)["tracks"][0]["name"]
+            recommendedSong = json.loads(result.content)["tracks"]
+            print(recommendedSong)
 
         except ValueError:
             raise ValueError("Unexpected JSON response from Spotify API")
