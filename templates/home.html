@@ -1,4 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Minininifier</h1>
+<link rel="stylesheet" href="/static/css/home.css" />
+<body>
+    <div class ="card-container">
+        <a href="/searchArtist" class="card">
+            <div class="card-image">
+              <img src="/static/images/min8.jpg" alt="Card Image 1">
+            </div>
+            <div class="card-content">
+              <h2>Search Artist</h2>
+            </div>
+          </a>
+        
+        <a href="/searchAlbum" class="card">
+            <div class="card-image">
+              <img src="/static/images/min9.jpg" alt="Card Image 2">
+            </div>
+            <div class="card-content">
+              <h2>Search Album</h2>
+            </div>
+        </a>
+        <a href="/searchSong" class="card">
+            <div class="card-image">
+              <img src="/static/images/min7.jpg" alt="Card Image 1">
+            </div>
+            <div class="card-content">
+              <h2>Search Song</h2>
+            </div>
+        </a>
+        
+        <a href="/recommender" class="card">
+            <div class="card-image">
+              <img src="/static/images/min10.jpg" alt="Card Image 2">
+            </div>
+            <div class="card-content">
+              <h2>Recommendations</h2>
+            </div>
+        </a>
+
+        <a href="/userInfo" class="card">
+            <div class="card-image">
+              <img src="/static/images/min11.jpg" alt="Card Image 2">
+            </div>
+            <div class="card-content">
+              <h2>User Profile</h2>
+            </div>
+        </a>
+    </div>
+    </body>
 {% endblock %}

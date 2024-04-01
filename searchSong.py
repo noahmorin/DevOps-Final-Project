@@ -28,3 +28,17 @@ def song_results(songName): # Get the results from the api call, split up the 5 
     if len(allResults) == 0: # if no results, return noResults.html
         return render_template('noResults.html')
     return allResults
+
+def search_for_song_by_id(token, songID):
+    url = f"https://api.spotify.com/v1/tracks/{songID}"
+    headers = get_auth_headers(token)
+    results = call_api(url, headers)
+    
+    if results.status_code == 200:
+        try:
+            jsonResult = json.loads(results.content)
+        except ValueError:
+            return ValueError("Unexpected JSON response")
+    else:
+        raise Exception(f"Status code {results.status_code} and response: {results.text}, while trying to search for {songID}.")
+    return jsonResult

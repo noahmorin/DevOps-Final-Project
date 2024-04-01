@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{ result.name }}</h1> 
+    <p>Album Type: {{ result.album_type }}</p>
+    <p>Released: {{ result.release_date }}</p>
+
+    <h2>Artist(s):
+        {% for artist in result.artists %}
+            {{ artist.name }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </h2>
+
+    {% if result.images %}
+        <img src="{{ result.images[0].url }}" alt="Album Image"> 
+    {% endif %}
+
+    <h3>Album Songs</h3>
+    <ol>
+        {% for track in tracks %} 
+            <li>
+                <b><a href="/song/{{ track.id }}">{{ track.name }}</a></b>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <p>Album URL: <a href="{{ result.external_urls.spotify }}">{{ result.external_urls.spotify }}</a></p>
+{% endblock %}
