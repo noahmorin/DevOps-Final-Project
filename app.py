@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track
-from userAuth import spotify_login, set_token
+from userAuth import check_login, spotify_login, set_token, log_out
 from searchArtist import artist_results, get_artist_albums
 from artistTopTracks import get_artist_top_tracks
 from getAlbum import album_results, get_album_tracks, get_album_by_id, get_album_tracks_by_id
@@ -9,32 +9,37 @@ from searchSong import song_results, search_for_song_by_id
 from recommender import get_genre_seeds, get_recommendation
 from auth import get_token
 from werkzeug.datastructures import ImmutableMultiDict
+import time
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    session['returnPage'] = '/'
+    session['checkCred'] = False
     return render_template('minioninifier.html')
 
 @app.route('/home', methods=['GET', 'POST']) 
 def home():
+    session['returnPage'] = '/home'
+    session['checkCred'] = False
     return render_template('home.html')
 
 # Link to user profile
 @app.route('/userInfo', methods=['GET', 'POST'])
 def user_info_route():
-    userProfileInfo = user_result()
+    if session['checkCred'] != True:
+        session['returnPage'] = '/userInfo'
+        return redirect('/checkingCred')
 
-    #If users token has not been loaded sends to login page then gets the data from userInfo and loads into page
-    if userProfileInfo == "login":
-       return redirect('/login')
-    else:
-       userName = user_name(userProfileInfo)
-       userProfileImg = user_profile_image(userProfileInfo)
-       userPlaylistInfo = user_playlist()
-       userTopArtistInfo = user_top_artist()
-       userTopTrackInfo = user_top_track()
-       return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo, artists = userTopArtistInfo, tracks = userTopTrackInfo)
+    session['checkCred'] = False
+    userProfileInfo = user_result()
+    userName = user_name(userProfileInfo)
+    userProfileImg = user_profile_image(userProfileInfo)
+    userPlaylistInfo = user_playlist()
+    userTopArtistInfo = user_top_artist()
+    userTopTrackInfo = user_top_track()
+    return render_template('userProfile.html', result = userName, img = userProfileImg, names = userPlaylistInfo, artists = userTopArtistInfo, tracks = userTopTrackInfo)
 
 # Link to allow user to log into spotify account
 @app.route('/login', methods=['GET', 'POST'])
@@ -43,11 +48,19 @@ def user_login():
    authUrl = spotify_login()
    return redirect(authUrl)
 
+@app.route('/logOut', methods=['GET', 'POST'])
+def user_log_out():
+    log_out()
+    session['checkCred'] = False
+    return redirect('/')
+
 @app.route('/callback/')
 def call_back():
-   # Set the token in the .env file and redirects back to user profile page
+   # Set the token in the .env file and redirects back to previous page
    set_token()
-   return redirect('/userInfo')
+   session['second'] = time.time()
+   return redirect(session['returnPage'])
+
 
 @app.route('/searchArtist', methods=['GET', 'POST'])
 def search_artist_route():
@@ -118,3 +131,21 @@ def album_details_route(albumID):
 def song_details_route(songID):
     result = search_for_song_by_id(get_token(), songID)
     return render_template('songDetails.html', result=result)
+
+@app.route('/checkingCred', methods=['GET', 'POST'])
+def checking_cred():
+    print("Check")
+    session['checkCred'] = True
+
+    if not session.get('second'):
+        session['second'] = time.time()
+
+    checkLogin = check_login(session['second'], time.time())
+
+    if checkLogin == 'login':
+       return redirect('/login')
+    elif checkLogin == 'refresh':
+        session['second'] = time.time()
+        return redirect(session['returnPage'])
+    else:
+        return redirect(session['returnPage'])

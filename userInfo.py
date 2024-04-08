@@ -7,10 +7,6 @@ load_dotenv()
 # Gets user information
 def user_result():
     try:
-        #Check if the user token is loaded and returns back login if it is token is not loaded
-        if os.getenv('userToken') is None:
-            return "login"
-
         # Calls the spotify api to get user data
         userProfileUrl = 'https://api.spotify.com/v1/me?'
         headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
@@ -65,13 +61,11 @@ def user_playlist():
 
         for playlist in allPlaylist:
             # Checks if each playlist has an image and if not it adds a minion album picture
-            try:
-                temp = playlist['images'][0]['url']
-            except IndexError:
+            if not playlist['images']:
                 temp = 'https://pyxis.nymag.com/v1/imgs/5b9/efd/75a07fbd5b20c0478d4dbdb062ea8d315d-minions-soundtrack.2x.rsocial.w600.jpg'
-            except Exception as error:
-                raise Exception("Unexpected Error: {}".format(error))
-            
+            else:
+                temp = playlist['images'][0]['url']
+
             userPlaylistInfo[playlist['name']] = temp
         
         # If there are no playlist then returns a message to add playlist with a minion image
@@ -97,12 +91,10 @@ def user_top_artist():
 
         for artist in topArtistInfo:
             # Checks if each artist has an image and if not it adds a minion profile picture
-            try:
-                tempArtist = artist['images'][0]['url']
-            except IndexError:
+            if not artist['images']:
                 tempArtist = 'https://i.ytimg.com/vi/2pFuprTphvs/maxresdefault.jpg'
-            except Exception as error:
-                raise Exception("Unexpected Error: {}".format(error))
+            else:
+                tempArtist = artist['images'][0]['url']
             
             topArtist[artist['name']] = tempArtist
         
@@ -129,13 +121,12 @@ def user_top_track():
 
         for track in topTrackInfo:
             # Checks if each track has an album image and if not it adds a minion album picture
-            try:
-                trackAlbum = track['album']
-                tempTrack = trackAlbum['images'][0]['url']
-            except IndexError:
+            trackAlbum = track['album']
+             
+            if not trackAlbum['images']:
                 tempTrack = 'https://i.ytimg.com/vi/2pFuprTphvs/maxresdefault.jpg'
-            except Exception as error:
-                raise Exception("Unexpected Error: {}".format(error))
+            else:
+                tempTrack = trackAlbum['images'][0]['url']
             
             topTrack[track['name']] = tempTrack
         
