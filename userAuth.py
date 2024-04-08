@@ -9,6 +9,25 @@ import string
 load_dotenv()
 
 # https://shubham13596.medium.com/using-spotify-web-api-in-flask-c28bd4fd47b6
+
+
+def check_login(startTime, currentTime):
+  #Check if the user token is loaded and returns back login if it is token is not loaded
+        if os.getenv('userToken') is None:
+            return "login"
+        elif (currentTime - startTime) >= (int(os.getenv('expireTime')) - 30):
+           getTokenParams = {
+            'grant_type': 'refresh_token',
+            'refresh_token': os.getenv('refreshToken'),
+            'client_id': os.getenv('CLIENT_ID'),
+            'client_secret': os.getenv('CLIENT_SECRET'),
+            'redirect_uri': os.getenv('REDIRECT_URI')
+            }
+           
+           add_token(getTokenParams)
+           return 'refresh'
+           
+
 # Creates the url query to allow user to log into spotify and sends the url
 def spotify_login():
  state = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k = 16))
@@ -30,7 +49,6 @@ def set_token():
   # Gets the code required to request user token
   authCode = request.args.get('code')
   # Requests user token from spotify
-  getTokenUrl = 'https://accounts.spotify.com/api/token/?'
   getTokenParams = {
     'grant_type': 'authorization_code',
     'code': authCode,
@@ -38,7 +56,13 @@ def set_token():
     'client_secret': os.getenv('CLIENT_SECRET'),
     'redirect_uri': os.getenv('REDIRECT_URI')
     }
- 
+  
+  add_token(getTokenParams)
+  return
+
+
+def add_token(getTokenParams):
+  getTokenUrl = 'https://accounts.spotify.com/api/token/?'
   reqToken = requests.post(getTokenUrl, data = getTokenParams)
 
   #Checks to make sure that the request for user api token was successful
@@ -46,6 +70,17 @@ def set_token():
      # Stores user token
      userTokenCreds = reqToken.json()
      os.environ['userToken'] = userTokenCreds['access_token']
+     # !!! Added refresh token and expire time
+     if os.getenv('refreshToken') is None:
+        os.environ['refreshToken'] = userTokenCreds['refresh_token']
+     os.environ['expireTime'] = str(userTokenCreds['expires_in'])
      return
   else:
     raise Exception(f"Status code {reqToken.status_code} and response: {reqToken.content} when pulling user profile.")
+
+
+def log_out():
+   os.environ.pop('userToken')
+   os.environ.pop('refreshToken')
+   os.environ.pop('expireTime')
+   return
