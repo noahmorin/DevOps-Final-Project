@@ -80,7 +80,10 @@ def add_token(getTokenParams):
 
 
 def log_out():
-   os.environ.pop('userToken')
-   os.environ.pop('refreshToken')
-   os.environ.pop('expireTime')
+   if os.getenv('userToken') != None:
+      os.environ.pop('userToken')
+   if os.getenv('expireTime') != None:
+      os.environ.pop('expireTime')
+   if os.getenv('refreshToken') != None:
+      os.environ.pop('refreshToken')
    return
