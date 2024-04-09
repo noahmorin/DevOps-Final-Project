@@ -10,8 +10,10 @@ from recommender import get_genre_seeds, get_recommendation
 from auth import get_token
 from werkzeug.datastructures import ImmutableMultiDict
 import time
+import os
 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():

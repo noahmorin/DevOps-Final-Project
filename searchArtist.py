@@ -44,6 +44,7 @@ def artist_results(artistName):
 
     return result, imageKey
 
+# Is an additional function that was added after phase 1. Test for this function does not exist, but the function is used in the app.
 def get_artist_albums(artistName):
     token = get_token()
 

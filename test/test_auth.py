@@ -9,11 +9,6 @@ import os
 from auth import get_token, get_auth_headers
 import base64
 
-# load_dotenv()
-
-# clientID = os.getenv("CLIENT_ID")
-# clientSecret = os.getenv("CLIENT_SECRET")
-
 class Test_Auth(unittest.TestCase):
 
     # Import method from auth.py affects the patch() decorator that needs to be specified
