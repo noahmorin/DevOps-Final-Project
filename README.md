@@ -1,5 +1,4 @@
-![example event parameter]
-(https://github.com/Ontario-Tech-NITS/final-project-group-3/actions/workflows/python-app.yml)
+[![Python Pipeline](https://github.com/Ontario-Tech-NITS/final-project-group-3/workflows/Python%20Pipeline/badge.svg)](https://github.com/Ontario-Tech-NITS/final-project-group-3/actions/workflows/python-pipeline.yml)
 # Project Description
 Our project uses the Spotify Web API and allows the user to search for various information about artists, songs, albums, and more.
 
