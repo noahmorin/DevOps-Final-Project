@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track
+from userInfo import user_result, user_name, user_profile_image, user_playlist, user_top_artist, user_top_track, user_add_playlist, add_to_playlist
 from userAuth import check_login, spotify_login, set_token, log_out
 from searchArtist import artist_results, get_artist_albums
 from artistTopTracks import get_artist_top_tracks
@@ -60,6 +60,7 @@ def user_log_out():
 def call_back():
    # Set the token in the .env file and redirects back to previous page
    set_token()
+   session['checkCred'] = True
    session['second'] = time.time()
    return redirect(session['returnPage'])
 
@@ -72,11 +73,18 @@ def search_artist_route():
             results, imageKey = artist_results(artistName)
             songs = get_artist_top_tracks(artistName)
             albums = get_artist_albums(artistName)
+            userPlaylistInfo = user_add_playlist()
 
-            return render_template('artistResults.html', results=results, songs=songs, albums=albums, imageKey=imageKey, query=artistName)  # Render results.html and pass variables to the template
+            return render_template('artistResults.html', results=results, songs=songs, albums=albums, imageKey=imageKey, query=artistName, addPlaylist = userPlaylistInfo)  # Render results.html and pass variables to the template
         except:
             return render_template('noResults.html')
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/searchArtist'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
+
         return render_template('searchArtist.html')
     
 @app.route('/searchAlbum', methods=['GET', 'POST'])
@@ -86,10 +94,16 @@ def search_album_route():
         try:
             albumResult = album_results(albumName)
             tracks = get_album_tracks(albumName)
-            return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+            userPlaylistInfo = user_add_playlist()
+            return render_template('returnAlbum.html', results=albumResult, tracks=tracks, addPlaylist = userPlaylistInfo)  # Render results and pass variables to the template
         except:
             return render_template('noResults.html')
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/searchAlbum'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         return render_template('searchAlbum.html')
 
 @app.route('/searchSong', methods=['GET', 'POST'])
@@ -98,10 +112,16 @@ def test_search_track_route():
         songName = request.form['track']
         try:
             allResults = song_results(songName)
-            return render_template('songResults.html', all_results=allResults)
+            userPlaylistInfo = user_add_playlist()
+            return render_template('songResults.html', all_results=allResults, addPlaylist = userPlaylistInfo)
         except:
             return render_template('noResults.html')
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/searchSong'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         return render_template('searchSong.html')
 
 @app.route('/recommender', methods=['GET', 'POST'])
@@ -116,8 +136,14 @@ def recommender_route():
         else:
             songRecommendation = "Please select at least 1 genre"
 
-        return render_template('recommendation.html', results = songRecommendation)
+        userPlaylistInfo = user_add_playlist()
+        return render_template('recommendation.html', results = songRecommendation, addPlaylist = userPlaylistInfo)
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/recommender'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         genres = get_genre_seeds()
         return render_template('recommender.html', genres=genres)
     
@@ -127,7 +153,8 @@ def recommender_route():
 def album_details_route(albumID):
     result = get_album_by_id(get_token(), albumID)
     tracks = get_album_tracks_by_id(get_token(), albumID)
-    return render_template('albumDetails.html', result=result, tracks=tracks)
+    userPlaylistInfo = user_add_playlist()
+    return render_template('albumDetails.html', result=result, tracks=tracks, addPlaylist = userPlaylistInfo)
 
 @app.route('/song/<songID>', methods=['GET'])
 def song_details_route(songID):
@@ -136,9 +163,6 @@ def song_details_route(songID):
 
 @app.route('/checkingCred', methods=['GET', 'POST'])
 def checking_cred():
-    print("Check")
-    session['checkCred'] = True
-
     if not session.get('second'):
         session['second'] = time.time()
 
@@ -148,6 +172,14 @@ def checking_cred():
        return redirect('/login')
     elif checkLogin == 'refresh':
         session['second'] = time.time()
+        session['checkCred'] = True
         return redirect(session['returnPage'])
     else:
+        session['checkCred'] = True
         return redirect(session['returnPage'])
+
+@app.route('/addPlaylist', methods=['GET', 'POST'])
+def add_playlist():
+    urlPlaylist = request.form['urlPlaylist']
+    add_to_playlist(urlPlaylist)
+    return redirect(session['returnPage'])

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from requests import get
+from requests import get, post
 
 load_dotenv()
 
@@ -137,4 +137,48 @@ def user_top_track():
         return topTrack
     else:
         raise Exception(f"Status code {topTrackResult.status_code} and response: {topTrackResult.content} when pulling user profile.")
+
+def user_add_playlist():
+     # Calls the spotify api to get user playlist
+    userPlaylistUrl = 'https://api.spotify.com/v1/me/playlists?limit=20'
+    headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
+    playlistResult = get(userPlaylistUrl, headers=headers)
+
+    # Checks to make sure that call was successful and return user playlist as a dictionary
+    if playlistResult.status_code == 200:
+        userPlaylistUrl = 'https://api.spotify.com/v1/me/playlists?limit=20'
+        headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
+        playlistResult = get(userPlaylistUrl, headers=headers)
+
+        # Checks to make sure that call was successful and return user playlist as a dictionary
+        if playlistResult.status_code == 200:
+            userAllPlaylist = playlistResult.json()
+            allPlaylist = userAllPlaylist['items']
+            userPlaylistInfo = {}
+
+            if not allPlaylist:
+                return "Empty"
+
+            for playlist in allPlaylist:
+                # Checks if each playlist has an image and if not it adds a minion album picture
+                try:
+                    temp = playlist['id']
+                except Exception as error:
+                    raise Exception("Unexpected Error: {}".format(error))
+                
+                userPlaylistInfo[playlist['name']] = temp
+            
+            return userPlaylistInfo
+        else:
+            raise Exception(f"Status code {playlistResult.status_code} and response: {playlistResult.content} when pulling user profile.")
+
+def add_to_playlist(url):
+    addPlaylistUrl = url
+    headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
+    playlistAdding = post(addPlaylistUrl, headers=headers)
+
+    if playlistAdding.status_code == 200:
+        return
+    else:
+        raise Exception(f"Status code {playlistAdding.status_code} and response: {playlistAdding.content} when pulling user profile.")
     

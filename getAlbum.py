@@ -40,7 +40,7 @@ def get_album_tracks(albumName):
 
     result = get(url, headers=headers)
     trackData = json.loads(result.content)
-    return [track["name"] for track in trackData["items"]]
+    return [{"name": track["name"], "uri": track["uri"]}for track in trackData["items"]]
 
 # Was added after phase 1. Is not our phase 2 additional feature (unless you want to count it for bonus marks?). So it does not have a unit test.
 def get_album_by_id(token, albumID):
@@ -73,7 +73,7 @@ def get_album_tracks_by_id(token, albumID):
             trackData = json.loads(result.content)
 
             if "items" in trackData:
-                return [{'name': track["name"], 'id': track["id"]} for track in trackData["items"]]
+                return [{'name': track["name"], 'id': track["id"], "uri": track["uri"]} for track in trackData["items"]]
             
         except ValueError:
             raise ValueError("Received unexpected JSON response from Spotify API")
