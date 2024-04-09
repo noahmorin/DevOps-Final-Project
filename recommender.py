@@ -26,14 +26,13 @@ def recommendation_api_call(token, seedGenres):
 
     if result.status_code == 200:
         try:
-            # recommendedSong = json.loads(result.content)["tracks"][0]["name"]
             recommendedSong = json.loads(result.content)["tracks"]
             print(recommendedSong)
 
         except ValueError:
             raise ValueError("Unexpected JSON response from Spotify API")
     else:
-        raise Exception(f"Status Code {result.status_code} and response: {result.content}, while trying to get the genre seeds.")
+        raise Exception(f"Status Code {result.status_code} and response: {result.content}, while trying to get the song recommendation.")
 
     return recommendedSong
 
