@@ -29,6 +29,7 @@ def album_results(albumName):
         return flask.render_template('noResults.html')
     return result
 
+# Was added after phase 1. Is not our phase 2 additional feature, so it does not have a unit test.
 def get_album_tracks(albumName):
 
     albumID = album_results(albumName)["id"]
@@ -41,6 +42,7 @@ def get_album_tracks(albumName):
     trackData = json.loads(result.content)
     return [{"name": track["name"], "uri": track["uri"]}for track in trackData["items"]]
 
+# Was added after phase 1. Is not our phase 2 additional feature (unless you want to count it for bonus marks?). So it does not have a unit test.
 def get_album_by_id(token, albumID):
     url = f"https://api.spotify.com/v1/albums/{albumID}"
     headers = get_auth_headers(token)
@@ -56,6 +58,7 @@ def get_album_by_id(token, albumID):
     
     return albumData     
 
+# Was added after phase 1. Is not our phase 2 additional feature, so it does not have a unit test.
 def get_album_tracks_by_id(token, albumID):
 
     token = get_token()

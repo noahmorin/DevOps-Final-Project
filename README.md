@@ -2,12 +2,13 @@
 Our project uses the Spotify Web API and allows the user to search for various information about artists, songs, albums, and more.
 
 # Features
-- Search for a Spotify artist, which displays different information about them, like their photo and style of music.
+- Search for a Spotify artist, which displays different information about them, like their photo and style of music. Below that you can also see the artists top songs, with a link to a webpage dedicated with info related to that song. Also, below the artist top songs are all the artist's albums with a link to a page dedicated to that as well.
 - Displays an artists most popular songs, and displays which album they are part of and when that album was released.
-- With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search, get to this feature using .../searchSong or click Song hyperlink on any webpage.
-- With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artise name.
-- Song Recommender feature that accepts up to 5 genres to be selected and recommends a song to the user. Song recommendations tailored to match the minion theme.
+- With the Search Song feature, users have the ability to search the Spotify API for the 5 most relevant songs to your search. The results display the ID, Artist, Album and Album art for the songs.
+- With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artist name.
+- Song Recommender feature that accepts up to 5 genres to be selected and recommends a song to the user. Displays 5 recommendations, showing their title, artist, album, and album art.
 - User Profile feature allows users to log in with their Spotify account to view their profile information. This includes their username, profile image, playlists, top artists and top songs.
+- With the manage playlist feature, which can only be used if logged in, can allow the user to add features to a public playlist using the results from our other features. To iriterate, private playlists cannot be seen by outside applications, so your playlist must be made public in order to be used with our app.
 
 
 # How to install
@@ -27,8 +28,10 @@ Our project uses the Spotify Web API and allows the user to search for various i
     CLIENT_ID="<client ID>"
     CLIENT_SECRET="<client secret>"
     REDIRECT_URI="http://127.0.0.1:5000/callback/"
+    SECRET_KEY="development key"
     ```
   - Replace ```<Client ID>``` and ```<client secret>``` with the CLIENT_ID and CLIENT_SECRET from the app you created in the Spotify developer dashboard
+  - The secret key value can be any string. It shouldn't matter for the purposes of testing locally.
 * Create a new python virtual environment for this project (the examples assume you're using windows)
  - This can be done either in the project root folder or in a dedicated virtual environments folder if you have one.
    - Create virtual environment in project root folder
@@ -55,5 +58,6 @@ Our project uses the Spotify Web API and allows the user to search for various i
 * Navigate to http://127.0.0.1:5000 in your browser
 * Use the navigation bar to navigate to the different features of the website
 * To use the search features, enter the name of the artist, song, or album you want to search for in the search bar and click the search button.
-* To use the song recommender feature, select the 'Recommender' navigation menu, then select up to 5 music genres and click the submit button. You will be given a song recommendation based on the genres you selected.
+* To use the song recommender feature, select the 'Recommender' navigation menu, then select up to 5 music genres and click the submit button. You will be given a song recommendations based on the genres you selected.
 * To use the user profile feature, click the 'User Profile' navigation menu and log in with your Spotify account. You will be able to view your profile information.
+* For manage playlist, the user must be logged in, then for the results of one of our other features you can add songs into your public playlists using a dropdown.
