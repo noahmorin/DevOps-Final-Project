@@ -20,6 +20,20 @@
             <li>
                 <b><a href="/song/{{ track.id }}">{{ track.name }}</a></b>
             </li>
+
+            {% if addPlaylist != "Empty" %}
+                {% if track.uri %}
+                    <form method="post" action="/addPlaylist">
+                        <select id="urlPlaylist" name="urlPlaylist">
+                            {% for key, value in addPlaylist.items() %}
+                                <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{track.uri}}'>{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Add to Playlist">
+                    </form> 
+                {% endif %}
+            {% endif %}
+
         {% endfor %}
     </ol>
 

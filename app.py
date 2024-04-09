@@ -153,7 +153,8 @@ def recommender_route():
 def album_details_route(albumID):
     result = get_album_by_id(get_token(), albumID)
     tracks = get_album_tracks_by_id(get_token(), albumID)
-    return render_template('albumDetails.html', result=result, tracks=tracks)
+    userPlaylistInfo = user_add_playlist()
+    return render_template('albumDetails.html', result=result, tracks=tracks, addPlaylist = userPlaylistInfo)
 
 @app.route('/song/<songID>', methods=['GET'])
 def song_details_route(songID):

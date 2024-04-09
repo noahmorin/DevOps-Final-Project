@@ -70,7 +70,7 @@ def get_album_tracks_by_id(token, albumID):
             trackData = json.loads(result.content)
 
             if "items" in trackData:
-                return [{'name': track["name"], 'id': track["id"]} for track in trackData["items"]]
+                return [{'name': track["name"], 'id': track["id"], "uri": track["uri"]} for track in trackData["items"]]
             
         except ValueError:
             raise ValueError("Received unexpected JSON response from Spotify API")
