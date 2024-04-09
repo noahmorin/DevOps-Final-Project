@@ -181,6 +181,5 @@ def checking_cred():
 @app.route('/addPlaylist', methods=['GET', 'POST'])
 def add_playlist():
     urlPlaylist = request.form['urlPlaylist']
-    userProfileInfo = user_result()
-    addSongPlaylist = add_to_playlist(urlPlaylist)
+    add_to_playlist(urlPlaylist)
     return redirect(session['returnPage'])
