@@ -8,22 +8,25 @@ from http import HTTPStatus
 
 class test_userInfo(unittest.TestCase):
     @patch('userInfo.user_result', return_value={'display_name': 'Lathushan Pavalavelauthan', 'external_urls': {'spotify': 'https://open.spotify.com/user/31usnyvxlegvmuy4rayvt7wszxs4'}, 'href': 'https://api.spotify.com/v1/users/31usnyvxlegvmuy4rayvt7wszxs4', 'id': '31usnyvxlegvmuy4rayvt7wszxs4', 'images': [], 'type': 'user', 'uri': 'spotify:user:31usnyvxlegvmuy4rayvt7wszxs4', 'followers': {'href': None, 'total': 0}, 'country': 'CA', 'product': 'free', 'explicit_content': {'filter_enabled': False, 'filter_locked': False}, 'email': 'lathushan.pavalavelauthan@ontariotechu.net'})
-
     # Test to make sure dict is returned from user_result
     def test_user_result_return(self, user_result):
         #fakeUserInfo = {'display_name': 'lathush5', 'external_urls': {'spotify': 'https://open.spotify.com/user/lathush5'}, 'href': 'https://api.spotify.com/v1/users/lathush5', 'id': 'lathush5', 'images': [{'url': 'https://i.scdn.co/image/ab67757000003b82ec28f8e246317f0c5e07baf5', 'height': 64, 'width': 64}, {'url': 'https://i.scdn.co/image/ab6775700000ee85ec28f8e246317f0c5e07baf5', 'height': 300, 'width': 300}], 'type': 'user', 'uri': 'spotify:user:lathush5', 'followers': {'href': None, 'total': 3}, 'country': 'CA', 'product': 'premium', 'explicit_content': {'filter_enabled': False, 'filter_locked': False}, 'email': 'lathush5@gmail.com'}
         self.reqInfo = user_result()
         self.assertIsInstance(self.reqInfo, dict)
 
+    @patch('userInfo.user_result', return_value={'display_name': 'Lathushan Pavalavelauthan', 'external_urls': {'spotify': 'https://open.spotify.com/user/31usnyvxlegvmuy4rayvt7wszxs4'}, 'href': 'https://api.spotify.com/v1/users/31usnyvxlegvmuy4rayvt7wszxs4', 'id': '31usnyvxlegvmuy4rayvt7wszxs4', 'images': [], 'type': 'user', 'uri': 'spotify:user:31usnyvxlegvmuy4rayvt7wszxs4', 'followers': {'href': None, 'total': 0}, 'country': 'CA', 'product': 'free', 'explicit_content': {'filter_enabled': False, 'filter_locked': False}, 'email': 'lathushan.pavalavelauthan@ontariotechu.net'})
     # Test to make sure username is returned
-    def test_username_return(self):
+    def test_username_return(self, user_result):
+        self.reqInfo = user_result()
         testUserName = user_name(self.reqInfo)
 
         self.assertTrue([]!= testUserName)
         self.assertIsInstance(testUserName, str)
 
+    @patch('userInfo.user_result', return_value={'display_name': 'Lathushan Pavalavelauthan', 'external_urls': {'spotify': 'https://open.spotify.com/user/31usnyvxlegvmuy4rayvt7wszxs4'}, 'href': 'https://api.spotify.com/v1/users/31usnyvxlegvmuy4rayvt7wszxs4', 'id': '31usnyvxlegvmuy4rayvt7wszxs4', 'images': [], 'type': 'user', 'uri': 'spotify:user:31usnyvxlegvmuy4rayvt7wszxs4', 'followers': {'href': None, 'total': 0}, 'country': 'CA', 'product': 'free', 'explicit_content': {'filter_enabled': False, 'filter_locked': False}, 'email': 'lathushan.pavalavelauthan@ontariotechu.net'})
     # Test to make sure profile image link is returned
-    def test_user_image_return(self):
+    def test_user_image_return(self, user_result):
+        self.reqInfo = user_result()
         testUserImage = user_profile_image(self.reqInfo)
 
         self.assertTrue([]!= testUserImage)
