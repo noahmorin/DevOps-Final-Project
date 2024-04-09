@@ -174,7 +174,6 @@ def user_add_playlist():
 
 def add_to_playlist(url):
     addPlaylistUrl = url
-    print(addPlaylistUrl)
     headers = {'Authorization': f'Bearer {os.getenv("userToken")}'}
     playlistAdding = post(addPlaylistUrl, headers=headers)
 

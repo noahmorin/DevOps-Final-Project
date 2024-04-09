@@ -105,10 +105,16 @@ def test_search_track_route():
         songName = request.form['track']
         try:
             allResults = song_results(songName)
-            return render_template('songResults.html', all_results=allResults)
+            userPlaylistInfo = user_add_playlist()
+            return render_template('songResults.html', all_results=allResults, addPlaylist = userPlaylistInfo)
         except:
             return render_template('noResults.html')
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/searchSong'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         return render_template('searchSong.html')
 
 @app.route('/recommender', methods=['GET', 'POST'])
@@ -149,7 +155,6 @@ def song_details_route(songID):
 
 @app.route('/checkingCred', methods=['GET', 'POST'])
 def checking_cred():
-    print("Check")
     session['checkCred'] = True
 
     if not session.get('second'):

@@ -11,15 +11,17 @@
             <img src="{{ result.album.images[0].url }}" alt="Album Image" width="300" height="300">
         {% endif %}
 
-        {% if result.uri %}
-            <form method="post" action="/addPlaylist">
-                <select id="urlPlaylist" name="urlPlaylist">
-                    {% for key, value in addPlaylist.items() %}
-                        <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{result.uri}}'>{{key}}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Add to Playlist">
-            </form> 
+        {% if addPlaylist != "Empty" %}
+            {% if result.uri %}
+                <form method="post" action="/addPlaylist">
+                    <select id="urlPlaylist" name="urlPlaylist">
+                        {% for key, value in addPlaylist.items() %}
+                            <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{result.uri}}'>{{key}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Add to Playlist">
+                </form> 
+            {% endif %}
         {% endif %}
         
     {% endfor %}
