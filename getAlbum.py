@@ -39,7 +39,7 @@ def get_album_tracks(albumName):
 
     result = get(url, headers=headers)
     trackData = json.loads(result.content)
-    return [track["name"] for track in trackData["items"]]
+    return [{"name": track["name"], "uri": track["uri"]}for track in trackData["items"]]
 
 def get_album_by_id(token, albumID):
     url = f"https://api.spotify.com/v1/albums/{albumID}"

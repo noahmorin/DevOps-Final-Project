@@ -93,10 +93,16 @@ def search_album_route():
         try:
             albumResult = album_results(albumName)
             tracks = get_album_tracks(albumName)
-            return render_template('returnAlbum.html', results=albumResult, tracks=tracks)  # Render results and pass variables to the template
+            userPlaylistInfo = user_add_playlist()
+            return render_template('returnAlbum.html', results=albumResult, tracks=tracks, addPlaylist = userPlaylistInfo)  # Render results and pass variables to the template
         except:
             return render_template('noResults.html')
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/searchAlbum'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         return render_template('searchAlbum.html')
 
 @app.route('/searchSong', methods=['GET', 'POST'])

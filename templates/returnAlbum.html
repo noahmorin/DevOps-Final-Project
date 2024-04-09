@@ -11,7 +11,18 @@
         {% endif %}
         <ul>
             {% for track in tracks %}
-                <li>{{ track }}</li>
+                <li>{{ track.name }}</li>
+
+                {% if addPlaylist != "Empty" %}
+                    <form method="post" action="/addPlaylist">
+                        <select id="urlPlaylist" name="urlPlaylist">
+                            {% for key, value in addPlaylist.items() %}
+                                <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{track.uri}}'>{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Add to Playlist">
+                    </form> 
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
