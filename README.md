@@ -8,7 +8,7 @@ Our project uses the Spotify Web API and allows the user to search for various i
 - With the Get album feature users can search for an album with the spotify API. This will provide the album that matches userinput the most. It will include the album tracks, total tracks and artist name.
 - Song Recommender feature that accepts up to 5 genres to be selected and recommends a song to the user. Displays 5 recommendations, showing their title, artist, album, and album art.
 - User Profile feature allows users to log in with their Spotify account to view their profile information. This includes their username, profile image, playlists, top artists and top songs.
-- With the manage playlist feature, which can only be used if logged in, can allow the user to add features to a public playlist using the results from our other features. To iriterate, private playlists cannot be seen by outside applications, so your playlist must be made public in order to be used with our app.
+- With the manage playlist feature, which can only be used if logged in, can allow the user to add features to a private or public playlist associated with your account using the results from our other features.
 
 
 # How to install
@@ -60,4 +60,4 @@ Our project uses the Spotify Web API and allows the user to search for various i
 * To use the search features, enter the name of the artist, song, or album you want to search for in the search bar and click the search button.
 * To use the song recommender feature, select the 'Recommender' navigation menu, then select up to 5 music genres and click the submit button. You will be given a song recommendations based on the genres you selected.
 * To use the user profile feature, click the 'User Profile' navigation menu and log in with your Spotify account. You will be able to view your profile information.
-* For manage playlist, the user must be logged in, then for the results of one of our other features you can add songs into your public playlists using a dropdown.
+* For manage playlist, the user must be logged in, then for the results of one of our other features you can add songs into your private or public playlists using a dropdown.
