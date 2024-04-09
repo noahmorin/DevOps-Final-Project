@@ -123,8 +123,14 @@ def recommender_route():
         else:
             songRecommendation = "Please select at least 1 genre"
 
-        return render_template('recommendation.html', results = songRecommendation)
+        userPlaylistInfo = user_add_playlist()
+        return render_template('recommendation.html', results = songRecommendation, addPlaylist = userPlaylistInfo)
     else:
+        if session['checkCred'] != True:
+            session['returnPage'] = '/recommender'
+            return redirect('/checkingCred')
+
+        session['checkCred'] = False
         genres = get_genre_seeds()
         return render_template('recommender.html', genres=genres)
     
