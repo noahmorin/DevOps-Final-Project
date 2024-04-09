@@ -58,3 +58,12 @@ class test_userInfo(unittest.TestCase):
 
         self.assertTrue([]!= testUserTrack)
         self.assertIsInstance(testUserTrack, dict)
+    
+    @patch('userInfo.user_add_playlist', return_value={'My Vibe': '45lMDmAEBk7B9KFK71W6kJ', 'Playlist1': '73L18vX7rbOB4syBD5kUED', 'Body (Remix) [feat. ArrDee, E1 (3x3), ZT (3x3), Bugzy Malone, Buni, Fivio Foreign & Darkoo]': '3k3DlcgbqoCUqPPtm69teq', 'Beat Mix': '3Q1KmdrkBvlKUtl7pMyLRH', 'Drake': '5KxhrpAOVrqIkFmTD9UEg0', 'Bgm': '4REcgFn9hWYeYC8btCp03E', "Play5": '1JjWp7lOEDdRoYidTOcWAc', 'My Playlist #11': '0gHSJJhgCCAcWMfC6bfERu', 'Songs ': '2TpeYV4bCalLUWkPeMJ2U1', 'Eminem – Music To Be Murdered By': '5BCsdSdhgXl6kcTTawjOt8'})
+    
+    # Test to make sure a list of playlist and its id
+    def test_add_playlist_return(self, user_add_playlist):
+        testAddUserPlaylist = user_add_playlist()
+
+        self.assertTrue([]!= testAddUserPlaylist)
+        self.assertIsInstance(testAddUserPlaylist, dict)
