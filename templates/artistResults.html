@@ -22,6 +22,17 @@
                 <div>Popularity: {{ song.popularity }}</div>
                 <div>Album: {{ song.album }}</a></div>
                 <div>Album Released: {{ song.release_date }}</div>
+                <!-- !!Add Playlist using Dropdown -->
+                {% if addPlaylist != "Empty" %}
+                    <form method="post" action="/addPlaylist">
+                        <select id="urlPlaylist" name="urlPlaylist">
+                            {% for key, value in addPlaylist.items() %}
+                                <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{song.uri}}'>{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Add to Playlist">
+                    </form> 
+                {% endif %}
                 <!-- <div>Song ID: {{ song.id }}</div> -->
             </li>
         {% endfor %}
