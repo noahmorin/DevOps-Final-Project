@@ -27,8 +27,10 @@ Our project uses the Spotify Web API and allows the user to search for various i
     CLIENT_ID="<client ID>"
     CLIENT_SECRET="<client secret>"
     REDIRECT_URI="http://127.0.0.1:5000/callback/"
+    SECRET_KEY="development key"
     ```
   - Replace ```<Client ID>``` and ```<client secret>``` with the CLIENT_ID and CLIENT_SECRET from the app you created in the Spotify developer dashboard
+  - The secret key value can be any string. It shouldn't matter for the purposes of testing locally.
 * Create a new python virtual environment for this project (the examples assume you're using windows)
  - This can be done either in the project root folder or in a dedicated virtual environments folder if you have one.
    - Create virtual environment in project root folder
