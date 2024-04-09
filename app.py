@@ -60,6 +60,7 @@ def user_log_out():
 def call_back():
    # Set the token in the .env file and redirects back to previous page
    set_token()
+   session['checkCred'] = True
    session['second'] = time.time()
    return redirect(session['returnPage'])
 
@@ -161,8 +162,6 @@ def song_details_route(songID):
 
 @app.route('/checkingCred', methods=['GET', 'POST'])
 def checking_cred():
-    session['checkCred'] = True
-
     if not session.get('second'):
         session['second'] = time.time()
 
@@ -172,8 +171,10 @@ def checking_cred():
        return redirect('/login')
     elif checkLogin == 'refresh':
         session['second'] = time.time()
+        session['checkCred'] = True
         return redirect(session['returnPage'])
     else:
+        session['checkCred'] = True
         return redirect(session['returnPage'])
 
 @app.route('/addPlaylist', methods=['GET', 'POST'])
