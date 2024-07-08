@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search Results</h1>
+    <div>
+        <!-- Items from JSON string go here, getAlbum returns the entire json data result-->
+        <h2>{{ results.name }}</h2>
+        <p>Total Tracks: {{ results.total_tracks }}</p>
+        <p>ID: {{ results.id }}</p>
+        {% if results.images %}
+            <img src="{{ results.images[0].url }}" alt="Album Image">
+        {% endif %}
+        <ul>
+            {% for track in tracks %}
+                <li>{{ track.name }}</li>
+
+                {% if addPlaylist != "Empty" %}
+                    <form method="post" action="/addPlaylist">
+                        <select id="urlPlaylist" name="urlPlaylist">
+                            {% for key, value in addPlaylist.items() %}
+                                <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{track.uri}}'>{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Add to Playlist">
+                    </form> 
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search Album</h1>
+    <form action="/searchAlbum" method="post">
+        <label for="album">Album Name:</label>
+        <input type="text" id="album" name="album" required>
+        <input type="submit" value="Search">
+    </form>
+{% endblock %}

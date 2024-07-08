@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Song Recommendations</h1>
+    
+    {% for result in results %}
+        <h3>{{ result.name }}</h3>
+        <p>Artist: {{ result.artists | map(attribute='name') | join(', ') }}</p>
+        <p>Album: {{ result.album.name }}</p>
+        
+        {% if result.album.images %}
+            <img src="{{ result.album.images[0].url }}" alt="Album Image" width="300" height="300">
+        {% endif %}
+
+        {% if addPlaylist != "Empty" %}
+            {% if result.uri %}
+                <form method="post" action="/addPlaylist">
+                    <select id="urlPlaylist" name="urlPlaylist">
+                        {% for key, value in addPlaylist.items() %}
+                            <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{result.uri}}'>{{key}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Add to Playlist">
+                </form> 
+            {% endif %}
+        {% endif %}
+        
+    {% endfor %}
+
+{% endblock %}

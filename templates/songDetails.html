@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Song: {{ result.name }}</h1> 
+    <div>
+        <h2>Artist(s): 
+            {% for artist in result.artists %}
+                {{ artist.name }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </h2>
+        <p>ID: {{ result.id }}</p>
+        <p>Popularity: {{ result.popularity }}</p> 
+        <p>URL: <a href="{{ result.external_urls.spotify }}">{{ result.external_urls.spotify }}</a></p> 
+        <p>Album: {{ result.album.name }}</p>
+        <p>Released: {{ result.album.release_date }}</p>
+
+        {% if result.album.images %}
+            <img src="{{ result.album.images[0].url }}" alt="Album Image">
+        {% endif %}
+
+        {% if result.disc_number %} 
+            <p>Disc Number: {{result.disc_number}}</p>
+        {% endif %}
+
+        {% if result.duration_ms %}
+            <p>Duration: {{ result.duration_ms }} ms</p> 
+        {% endif %}
+        
+        {% if result.explicit %}
+            <p>Explicit: Yes</p>
+        {% else %}
+            <p>Explicit: No</p>
+        {% endif %}
+
+        {% if result.track_number %}
+            <p>Track Number: {{ result.track_number }}</p>
+        {% endif %}
+
+    </div>
+{% endblock %} 

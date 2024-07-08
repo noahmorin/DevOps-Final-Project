@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+    {% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+    <div>
+        <h2>{{ results.name }}</h2>
+        <p>Popularity: {{ results.popularity }}</p>
+        <p>Followers: {{ results.followers.total }}</p>
+        <p>Genres: {{ results.genres | join(', ') }}</p>
+        <p>URL: <a href="{{ results.external_urls.spotify}}">{{ results.external_urls.spotify }}</a></p>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <img src="{{ results.images[0].url }}" style="width: 640px; height: 640px;"alt="Artist Image" class='artistImage'>
+            <img src="/static/images/{{ imageKey }}.jpg" style="width: 640px; height: 640px; display: none;" alt="Minionified Artist Image" class="artistImage">
+            <button id="toggleImageButton" class="btn btn-primary">Minionify Artist</button>
+        </div>
+
+
+        <h3>{{ results.name }} Top Songs</h3>
+        {% for song in songs %}
+            <li class="song-list">
+                <b><a href="/song/{{ song.id }}">{{ song.name }}</a></b>
+                <div>Popularity: {{ song.popularity }}</div>
+                <div>Album: {{ song.album }}</a></div>
+                <div>Album Released: {{ song.release_date }}</div>
+                <!-- !!Add Playlist using Dropdown -->
+                {% if addPlaylist != "Empty" %}
+                    <form method="post" action="/addPlaylist">
+                        <select id="urlPlaylist" name="urlPlaylist">
+                            {% for key, value in addPlaylist.items() %}
+                                <option value='https://api.spotify.com/v1/playlists/{{value}}/tracks?uris={{song.uri}}'>{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Add to Playlist">
+                    </form> 
+                {% endif %}
+                <!-- <div>Song ID: {{ song.id }}</div> -->
+            </li>
+        {% endfor %}
+
+        <h3>Albums</h3>
+        {% for album in albums %}
+            <li class="song-list"> 
+                <a href="/album/{{ album.id }}">{{ album.name }}</a>
+                <div>Release Date: {{ album.release_date }}</div>
+                <div>Total Tracks: {{ album.total_tracks }}</div>
+                <div>Album ID: {{ album.id }}</div>
+            </li>
+        {% endfor %}
+
+    </div>
+{% endblock %}
